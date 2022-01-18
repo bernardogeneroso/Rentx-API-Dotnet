@@ -62,3 +62,10 @@
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/obj/Debug/net6.0/API.genruntimeconfig.cache
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Humanizer.dll
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
