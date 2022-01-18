@@ -224,6 +224,67 @@ namespace Database.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Models.Car", b =>
+                {
+                    b.Property<string>("Plate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Doors")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Fuel")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("PricePerDay")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Seats")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Transmission")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Plate");
+
+                    b.ToTable("Cars");
+                });
+
+            modelBuilder.Entity("Models.CarImage", b =>
+                {
+                    b.Property<string>("ImageName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CarPlate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ImageName");
+
+                    b.HasIndex("CarPlate");
+
+                    b.ToTable("CarImage");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -273,6 +334,18 @@ namespace Database.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.CarImage", b =>
+                {
+                    b.HasOne("Models.Car", null)
+                        .WithMany("CarImages")
+                        .HasForeignKey("CarPlate");
+                });
+
+            modelBuilder.Entity("Models.Car", b =>
+                {
+                    b.Navigation("CarImages");
                 });
 #pragma warning restore 612, 618
         }

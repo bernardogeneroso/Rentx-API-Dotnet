@@ -10,7 +10,7 @@ using Services.Interfaces;
 namespace API.Controllers;
 
 [Route("api/[controller]")]
-public class AccountController : Controller
+public class AccountController : ControllerBase
 {
   private readonly UserManager<AppUser> _userManager;
   private readonly SignInManager<AppUser> _signInManager;
@@ -27,7 +27,7 @@ public class AccountController : Controller
 
   [AllowAnonymous]
   [HttpPost("login")]
-  public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+  public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
   {
     var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
@@ -42,7 +42,7 @@ public class AccountController : Controller
 
   [AllowAnonymous]
   [HttpPost("register")]
-  public async Task<IActionResult> Register(RegisterDto registerDto)
+  public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
   {
     if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
     {

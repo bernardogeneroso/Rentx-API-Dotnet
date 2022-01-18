@@ -69,3 +69,13 @@
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
 /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Providers.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/Providers.pdb
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/AutoMapper.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/FluentValidation.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/FluentValidation.AspNetCore.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/FluentValidation.DependencyInjectionExtensions.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/MediatR.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/MediatR.Contracts.dll
+/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/bin/Debug/net6.0/MediatR.Extensions.Microsoft.DependencyInjection.dll
