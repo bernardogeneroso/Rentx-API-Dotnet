@@ -13,21 +13,24 @@ public class Seed
             {
                 new AppUser
                 {
-                    UserName = "bob",
-                    Email = "bob@test.com",
-                    Role = Role.User
+                  DisplayName = "Bob",
+                  UserName = "bob",
+                  Email = "bob@test.com",
+                  Role = Role.User
                 },
                 new AppUser
                 {
-                    UserName = "jim",
-                    Email = "jim@test.com",
-                    Role = Role.User
+                  DisplayName = "Jim",
+                  UserName = "jim",
+                  Email = "jim@test.com",
+                  Role = Role.User
                 },
                 new AppUser
                 {
-                    UserName = "admin",
-                    Email = "admin@test.com",
-                    Role = Role.Admin
+                  DisplayName = "Admin",
+                  UserName = "admin",
+                  Email = "admin@test.com",
+                  Role = Role.Admin
                 }
             };
 

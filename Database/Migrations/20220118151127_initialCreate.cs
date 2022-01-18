@@ -28,6 +28,7 @@ namespace Database.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
+                    DisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     AvatarUrl = table.Column<string>(type: "TEXT", nullable: true),
                     AvatarName = table.Column<string>(type: "TEXT", nullable: true),
                     Role = table.Column<int>(type: "INTEGER", nullable: false),

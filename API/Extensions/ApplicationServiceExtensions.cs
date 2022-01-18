@@ -1,6 +1,8 @@
 using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Providers.Security;
+using Services.Interfaces;
 
 namespace API.Middleware;
 
@@ -23,6 +25,8 @@ public static class ApplicationServiceExtensions
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
       });
     });
+
+    services.AddScoped<IUserAccessor, UserAccessor>();
 
     return services;
   }
