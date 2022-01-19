@@ -11,6 +11,7 @@ public class DataContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<Car> Cars { get; set; }
+    public DbSet<CarImage> CarsImage { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
