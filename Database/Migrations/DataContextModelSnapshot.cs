@@ -269,20 +269,27 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Models.CarImage", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CarPlate")
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Plate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ImageName");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CarPlate");
+                    b.HasIndex("Plate");
 
-                    b.ToTable("CarImage");
+                    b.ToTable("CarsImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -338,9 +345,12 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Models.CarImage", b =>
                 {
-                    b.HasOne("Models.Car", null)
+                    b.HasOne("Models.Car", "Car")
                         .WithMany("CarImages")
-                        .HasForeignKey("CarPlate");
+                        .HasForeignKey("Plate")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("Models.Car", b =>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
+using Services.CarsImage;
 
 namespace API.Controllers;
 
@@ -32,5 +33,11 @@ public class CarController : BaseApiController
     public async Task<IActionResult> DeleteCar(string plate)
     {
         return HandleResult(await Mediator.Send(new Delete.Command { Plate = plate }));
+    }
+
+    [HttpPost("image/{plate}")]
+    public async Task<IActionResult> UploadImage(string plate, [FromForm] IFormFile File)
+    {
+        return HandleResult(await Mediator.Send(new UploadCarImage.Command { File = File, Plate = plate }));
     }
 }

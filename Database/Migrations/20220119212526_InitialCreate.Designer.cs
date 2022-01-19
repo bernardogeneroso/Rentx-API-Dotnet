@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220118211138_UpdateCarRemovingEnum")]
-    partial class UpdateCarRemovingEnum
+    [Migration("20220119212526_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -258,6 +258,9 @@ namespace Database.Migrations
                     b.Property<string>("Transmission")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Year")
                         .HasColumnType("TEXT");
 
@@ -268,20 +271,26 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Models.CarImage", b =>
                 {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CarPlate")
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Plate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ImageName");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CarPlate");
+                    b.HasIndex("Plate");
 
-                    b.ToTable("CarImage");
+                    b.ToTable("CarsImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -337,9 +346,12 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Models.CarImage", b =>
                 {
-                    b.HasOne("Models.Car", null)
+                    b.HasOne("Models.Car", "Car")
                         .WithMany("CarImages")
-                        .HasForeignKey("CarPlate");
+                        .HasForeignKey("Plate")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("Models.Car", b =>

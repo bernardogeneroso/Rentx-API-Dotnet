@@ -2,6 +2,8 @@ using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Providers.API;
+using Providers.Image;
 using Providers.Security;
 using Services.Cars;
 using Services.Core;
@@ -32,6 +34,8 @@ public static class ApplicationServiceExtensions
         services.AddMediatR(typeof(List.Handler).Assembly);
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddScoped<IUserAccessor, UserAccessor>();
+        services.AddScoped<IImageAccessor, ImageAccessor>();
+        services.AddScoped<IOriginAccessor, OriginAccessor>();
 
         return services;
     }
