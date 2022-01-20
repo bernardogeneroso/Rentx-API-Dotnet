@@ -46,6 +46,8 @@ public class UploadCarImage
         {
             if (request.File.Length > 0)
             {
+                // TODO: Verify path of the image
+
                 var car = await _context.Cars.Include(i => i.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 
                 if (car == null) return Result<CarImageDto>.Failure("Failed to upload image");
