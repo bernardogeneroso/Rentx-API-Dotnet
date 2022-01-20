@@ -56,16 +56,11 @@ public class UploadCarImage
 
                 if (path == null) return Result<CarImageDto>.Failure("Failed to upload image");
 
-                // TODO: IsMain should be false for all images except the first one
-
                 var currentMain = car.CarImages.FirstOrDefault(x => x.IsMain);
-
-                if (currentMain != null) currentMain.IsMain = false;
 
                 var carImage = new CarImage
                 {
                     Car = car,
-                    Url = path,
                     ImageName = fileName,
                     IsMain = currentMain?.IsMain == true ? false : true
                 };
@@ -77,6 +72,8 @@ public class UploadCarImage
                 if (!result) return Result<CarImageDto>.Failure("Failed to upload image");
 
                 var carImageDto = _mapper.Map<CarImageDto>(carImage);
+
+                carImageDto.Url = path;
 
                 return Result<CarImageDto>.Success(carImageDto);
             }

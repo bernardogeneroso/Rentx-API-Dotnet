@@ -12,7 +12,8 @@ public class MappingProfiles : Profile
     {
         CreateMap<Car, Car>();
         CreateMap<Car, CarDto>();
-        CreateMap<CarImage, CarImageDto>();
+        CreateMap<CarImage, CarImageDto>()
+                .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.ImageName));
     }
 }
 
