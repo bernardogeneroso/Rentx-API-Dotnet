@@ -1,5 +1,5 @@
 using System.Text;
-using API.Services;
+using API.Providers;
 using Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -10,32 +10,32 @@ namespace API.Middleware;
 
 public static class IdentityServiceExtensions
 {
-  public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
-  {
-    services.AddIdentityCore<AppUser>(opt =>
-            {
-              opt.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<DataContext>()
-              .AddSignInManager<SignInManager<AppUser>>()
-              .AddDefaultTokenProviders();
-
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
-
-    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
     {
-      opt.TokenValidationParameters = new TokenValidationParameters
-      {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = key,
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
-      };
-    });
+        services.AddIdentityCore<AppUser>(opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                }).AddEntityFrameworkStores<DataContext>()
+                  .AddSignInManager<SignInManager<AppUser>>()
+                  .AddDefaultTokenProviders();
 
-    services.AddScoped<TokenService>();
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
-    return services;
-  }
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+        {
+            opt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+        });
+
+        services.AddScoped<TokenService>();
+
+        return services;
+    }
 }

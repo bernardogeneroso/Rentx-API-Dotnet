@@ -1,5 +1,6 @@
 using Application.Core;
 using Database;
+using FluentValidation;
 using MediatR;
 
 namespace Services.Cars;
@@ -9,6 +10,14 @@ public class Delete
     public class Command : IRequest<Result<Unit>>
     {
         public string Plate { get; set; }
+    }
+
+    public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.Plate).Length(6).NotEmpty();
+        }
     }
 
     public class Handler : IRequestHandler<Command, Result<Unit>>

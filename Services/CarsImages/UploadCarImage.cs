@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using Services.Interfaces;
 
-namespace Services.CarsImage;
+namespace Services.CarsImages;
 
 public class UploadCarImage
 {
@@ -24,7 +24,9 @@ public class UploadCarImage
         public CommandValidator()
         {
             RuleFor(x => x.Plate).Length(6).NotEmpty();
-            RuleFor(x => x.File).NotEmpty();
+            RuleFor(x => x.File.Length).NotNull().LessThanOrEqualTo(100)
+                .WithMessage("File size is larger than allowed");
+            RuleFor(x => x.File.ContentType).Must(x => x.Contains("image")).WithMessage("File must be an image").NotEmpty();
         }
     }
 

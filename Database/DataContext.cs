@@ -12,6 +12,7 @@ public class DataContext : IdentityDbContext<AppUser>
 
     public DbSet<Car> Cars { get; set; }
     public DbSet<CarImage> CarsImages { get; set; }
+    public DbSet<CarDetail> CarsDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -22,10 +23,19 @@ public class DataContext : IdentityDbContext<AppUser>
 
         builder.Entity<Car>(c => c.HasKey("Plate"));
 
+
+        builder.Entity<CarImage>(c => c.HasKey(ci => new { ci.Plate, ci.ImageName }));
         builder.Entity<CarImage>()
             .HasOne(ci => ci.Car)
             .WithMany(c => c.CarImages)
             .HasForeignKey(ci => ci.Plate)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<CarDetail>().ToTable("CarsDetails").HasKey(cd => cd.Plate);
+        builder.Entity<CarDetail>()
+            .HasOne(cd => cd.Car)
+            .WithOne(c => c.CarDetails)
+            .HasForeignKey<CarDetail>(cd => cd.Plate)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

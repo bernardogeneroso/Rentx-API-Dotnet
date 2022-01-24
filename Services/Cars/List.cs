@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace Services.Cars
 {
@@ -30,7 +25,7 @@ namespace Services.Cars
 
             public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var cars = await _context.Cars.ProjectTo<CarDto>(_mapper.ConfigurationProvider).ToListAsync();
+                var cars = await _context.Cars.Include(c => c.CarImages).Include(c => c.CarDetails).AsSplitQuery().ProjectTo<CarDto>(_mapper.ConfigurationProvider).ToListAsync();
 
                 return Result<List<CarDto>>.Success(cars);
             }

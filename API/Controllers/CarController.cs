@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
-using Services.CarsImage;
 
 namespace API.Controllers;
 
@@ -26,18 +25,36 @@ public class CarController : BaseApiController
     {
         car.Plate = plate;
 
-        return HandleResult(await Mediator.Send(new Edit.Command { Car = car }));
+        return HandleResult(await Mediator.Send(new Services.Cars.Edit.Command { Car = car }));
     }
 
     [HttpDelete("{plate}")]
     public async Task<IActionResult> DeleteCar(string plate)
     {
-        return HandleResult(await Mediator.Send(new Delete.Command { Plate = plate }));
+        return HandleResult(await Mediator.Send(new Services.Cars.Delete.Command { Plate = plate }));
+    }
+
+    [HttpGet("details/{plate}")]
+    public async Task<IActionResult> GetCarDetails(string plate)
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsDetails.Details.Query { Plate = plate }));
+    }
+
+    [HttpPut("details/{plate}")]
+    public async Task<IActionResult> GetCarDetails(string plate, [FromBody] CarDetail carDetail)
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsDetails.Edit.Command { Plate = plate, CarDetail = carDetail }));
     }
 
     [HttpPost("image/{plate}")]
     public async Task<IActionResult> UploadImage(string plate, [FromForm] IFormFile File)
     {
-        return HandleResult(await Mediator.Send(new UploadCarImage.Command { File = File, Plate = plate }));
+        return HandleResult(await Mediator.Send(new Services.CarsImages.UploadCarImage.Command { Plate = plate, File = File }));
+    }
+
+    [HttpDelete("image/{plate}")]
+    public async Task<IActionResult> DelelteImage(string plate, [FromQuery] string imageName)
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsImages.Delete.Command { Plate = plate, ImageName = imageName }));
     }
 }

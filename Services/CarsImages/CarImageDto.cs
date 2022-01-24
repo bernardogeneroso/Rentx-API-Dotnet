@@ -1,4 +1,4 @@
-namespace Services.CarsImage;
+namespace Services.CarsImages;
 
 public class CarImageDto
 {

@@ -15,4 +15,5 @@ public class Car
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public ICollection<CarImage> CarImages { get; set; }
+    public CarDetail CarDetails { get; set; }
 }

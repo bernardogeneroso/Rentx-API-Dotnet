@@ -1,5 +1,5 @@
 using API.DTOs;
-using API.Services;
+using API.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,84 +9,92 @@ using Services.Interfaces;
 
 namespace API.Controllers;
 
+[ApiController]
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
-  private readonly UserManager<AppUser> _userManager;
-  private readonly SignInManager<AppUser> _signInManager;
-  private readonly TokenService _tokenService;
-  private readonly IUserAccessor _userAccessor;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly TokenService _tokenService;
+    private readonly IUserAccessor _userAccessor;
 
-  public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor)
-  {
-    _userAccessor = userAccessor;
-    _tokenService = tokenService;
-    _signInManager = signInManager;
-    _userManager = userManager;
-  }
-
-  [AllowAnonymous]
-  [HttpPost("login")]
-  public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
-  {
-    var user = await _userManager.FindByEmailAsync(loginDto.Email);
-
-    if (user == null) return Unauthorized("Invalid email or password");
-
-    var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-    if (!result.Succeeded) return Unauthorized("Invalid email or password");
-
-    return CreateUserObject(user);
-  }
-
-  [AllowAnonymous]
-  [HttpPost("register")]
-  public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
-  {
-    if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor)
     {
-      ModelState.AddModelError("email", "Email taken");
-
-      return ValidationProblem();
+        _userAccessor = userAccessor;
+        _tokenService = tokenService;
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
 
-    if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
     {
-      ModelState.AddModelError("username", "Username taken");
+        var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
-      return ValidationProblem();
+        if (user == null) return Unauthorized("Invalid email or password");
+
+        var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+        if (!result.Succeeded) return Unauthorized("Invalid email or password");
+
+        return CreateUserObject(user);
     }
 
-    var user = new AppUser
+    [AllowAnonymous]
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-      DisplayName = registerDto.DisplayName,
-      Email = registerDto.Email,
-      UserName = registerDto.Username
-    };
+        if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+        {
+            ModelState.AddModelError("email", "Email taken");
 
-    var result = await _userManager.CreateAsync(user, registerDto.Password);
+            return ValidationProblem();
+        }
 
-    if (!result.Succeeded) return BadRequest("Problem registering user");
+        if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+        {
+            ModelState.AddModelError("username", "Username taken");
 
-    return Ok("User registered");
-  }
+            return ValidationProblem();
+        }
 
-  [HttpGet]
-  public async Task<ActionResult<UserDto>> GetCurrentUser()
-  {
-    var user = await _userManager.FindByNameAsync(_userAccessor.GetUsername());
+        var user = new AppUser
+        {
+            DisplayName = registerDto.DisplayName,
+            Email = registerDto.Email,
+            UserName = registerDto.Username
+        };
 
-    return CreateUserObject(user);
-  }
+        var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-  private UserDto CreateUserObject(AppUser user)
-  {
-    return new UserDto
+        if (!result.Succeeded) return BadRequest("Problem registering user");
+
+        return Ok("User registered");
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
-      DisplayName = user.DisplayName,
-      Username = user.UserName,
-      Token = _tokenService.CreateToken(user)
-    };
-  }
+        var user = await _userManager.FindByNameAsync(_userAccessor.GetUsername());
+
+        return CreateUserObject(user);
+    }
+
+    private UserDto CreateUserObject(AppUser user)
+    {
+        var userDto = new UserDto
+        {
+            DisplayName = user.DisplayName,
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user),
+            Avatar = new Avatar
+            {
+                AvatarName = user.AvatarName,
+                Url = user.AvatarUrl,
+            }
+        };
+
+        return userDto;
+    }
 }

@@ -18,7 +18,8 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(policy));
 }).AddFluentValidation(cfg =>
 {
-    cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+    cfg.RegisterValidatorsFromAssemblyContaining<Create>(lifetime: ServiceLifetime.Singleton);
+    cfg.ImplicitlyValidateChildProperties = true;
 });
 // builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServices(builder.Configuration);
@@ -39,7 +40,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 
@@ -59,7 +60,7 @@ try
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(userManager);
+    await Seed.SeedData(userManager, context);
 }
 catch (Exception ex)
 {

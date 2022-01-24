@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services.Interfaces;
 
@@ -21,10 +22,9 @@ public class ImageAccessor : IImageAccessor
     {
         try
         {
-            if (!Directory.Exists(_environment.WebRootPath + "/images"))
-            {
-                Directory.CreateDirectory(_environment.WebRootPath + "/images");
-            }
+            var directoryPath = _environment.WebRootPath + "/images";
+
+            if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
 
             var path = Path.Combine(_environment.WebRootPath, "images", fileName);
 
@@ -40,13 +40,27 @@ public class ImageAccessor : IImageAccessor
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex.Message);
+            if (_environment.IsDevelopment()) _logger.LogError(ex.Message);
+
             return null;
         }
     }
 
-    public Task<bool> DeleteImage(string publicId)
+    public bool DeleteImage(string imageName)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var path = Path.Combine(_environment.WebRootPath, "images", imageName);
+
+            if (File.Exists(path)) File.Delete(path);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            if (_environment.IsDevelopment()) _logger.LogError(ex.Message);
+
+            return false;
+        }
     }
 }

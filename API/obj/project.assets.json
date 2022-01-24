@@ -912,6 +912,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.1",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Services": "1.0.0"
         },
@@ -2308,6 +2309,7 @@
     "net6.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "FluentValidation.AspNetCore >= 10.3.6",
+      "FluentValidation.DependencyInjectionExtensions >= 10.3.6",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 10.0.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.1",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.1",
@@ -2366,6 +2368,10 @@
             "version": "[11.0.0, )"
           },
           "FluentValidation.AspNetCore": {
+            "target": "Package",
+            "version": "[10.3.6, )"
+          },
+          "FluentValidation.DependencyInjectionExtensions": {
             "target": "Package",
             "version": "[10.3.6, )"
           },

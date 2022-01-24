@@ -267,11 +267,41 @@ namespace Database.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("Models.CarDetail", b =>
+                {
+                    b.Property<string>("Plate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("acceleration")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("hp")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("maxSpeed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("topSpeed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("weight")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Plate");
+
+                    b.ToTable("CarsDetails", (string)null);
+                });
+
             modelBuilder.Entity("Models.CarImage", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Plate")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("TEXT");
@@ -279,12 +309,7 @@ namespace Database.Migrations
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Plate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Plate");
+                    b.HasKey("Plate", "ImageName");
 
                     b.ToTable("CarsImages");
                 });
@@ -340,18 +365,32 @@ namespace Database.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Models.CarDetail", b =>
+                {
+                    b.HasOne("Models.Car", "Car")
+                        .WithOne("CarDetails")
+                        .HasForeignKey("Models.CarDetail", "Plate")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("Models.CarImage", b =>
                 {
                     b.HasOne("Models.Car", "Car")
                         .WithMany("CarImages")
                         .HasForeignKey("Plate")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Car");
                 });
 
             modelBuilder.Entity("Models.Car", b =>
                 {
+                    b.Navigation("CarDetails");
+
                     b.Navigation("CarImages");
                 });
 #pragma warning restore 612, 618
