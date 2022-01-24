@@ -18,9 +18,11 @@ public class AccountController : ControllerBase
     private readonly TokenService _tokenService;
     private readonly IUserAccessor _userAccessor;
     private readonly IImageAccessor _imageAccessor;
+    private readonly IOriginAccessor _originAccessor;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor, IOriginAccessor originAccessor)
     {
+        _originAccessor = originAccessor;
         _imageAccessor = imageAccessor;
         _userAccessor = userAccessor;
         _tokenService = tokenService;
@@ -84,12 +86,18 @@ public class AccountController : ControllerBase
 
         var fileName = $"{Guid.NewGuid().ToString()}_{File.FileName}";
 
+        if (user.AvatarName != null)
+        {
+            var resultDeleteImage = _imageAccessor.DeleteImage(user.AvatarName);
+
+            if (!resultDeleteImage) return BadRequest("Problem uploading image");
+        }
+
         var path = await _imageAccessor.AddImage(File, fileName);
 
         if (path == null) return BadRequest("Problem uploading image");
 
         user.AvatarName = fileName;
-        user.AvatarUrl = path;
 
         await _userManager.UpdateAsync(user);
 
@@ -106,6 +114,8 @@ public class AccountController : ControllerBase
 
     private UserDto CreateUserObject(AppUser user)
     {
+        var pathImage = user?.AvatarName != null ? Path.Combine(_originAccessor.GetOrigin(), "images", user.AvatarName) : null;
+
         var userDto = new UserDto
         {
             DisplayName = user.DisplayName,
@@ -114,7 +124,7 @@ public class AccountController : ControllerBase
             Avatar = new Avatar
             {
                 AvatarName = user.AvatarName,
-                Url = user.AvatarUrl,
+                Url = pathImage,
             }
         };
 

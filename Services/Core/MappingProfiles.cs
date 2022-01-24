@@ -23,8 +23,7 @@ public class MappingProfiles : Profile
                             ImageName = x.ImageName,
                             Url = $"{currentOrigin}/{x.ImageName}",
                             IsMain = x.IsMain
-                        })))
-            .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.CarDetails));
+                        })));
         CreateMap<CarImage, CarImageDto>();
     }
 }

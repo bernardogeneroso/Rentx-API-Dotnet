@@ -30,7 +30,6 @@ namespace Services.Cars
             {
                 var cars = await _context.Cars
                                         .Include(c => c.CarImages)
-                                        .Include(c => c.CarDetails)
                                         .AsSplitQuery()
                                         .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                                         .ToListAsync();
