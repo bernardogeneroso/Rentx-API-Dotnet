@@ -3,7 +3,6 @@ using AutoMapper;
 using Database;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -34,12 +33,10 @@ public class UploadCarImage
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _environment;
         private readonly IImageAccessor _imageAccessor;
-        public Handler(DataContext context, IWebHostEnvironment environment, IImageAccessor imageAccessor, IMapper mapper)
+        public Handler(DataContext context, IImageAccessor imageAccessor, IOriginAccessor originAccessor, IMapper mapper)
         {
             _imageAccessor = imageAccessor;
-            _environment = environment;
             _mapper = mapper;
             _context = context;
         }

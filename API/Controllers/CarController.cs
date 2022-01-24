@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
+using Services.CarsDetails;
 
 namespace API.Controllers;
 
@@ -41,9 +42,9 @@ public class CarController : BaseApiController
     }
 
     [HttpPut("details/{plate}")]
-    public async Task<IActionResult> GetCarDetails(string plate, [FromBody] CarDetail carDetail)
+    public async Task<IActionResult> GetCarDetails(string plate, [FromBody] CarDetailDto carDetailDto)
     {
-        return HandleResult(await Mediator.Send(new Services.CarsDetails.Edit.Command { Plate = plate, CarDetail = carDetail }));
+        return HandleResult(await Mediator.Send(new Services.CarsDetails.Edit.Command { Plate = plate, CarDetailDto = carDetailDto }));
     }
 
     [HttpPost("image/{plate}")]

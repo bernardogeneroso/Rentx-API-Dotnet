@@ -5,6 +5,8 @@
 
 API/appsettings.Development.json
 
+API/wwwroot/images
+
 # User-specific files
 *.rsuser
 *.suo

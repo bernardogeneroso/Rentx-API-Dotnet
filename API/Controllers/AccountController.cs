@@ -17,9 +17,11 @@ public class AccountController : ControllerBase
     private readonly SignInManager<AppUser> _signInManager;
     private readonly TokenService _tokenService;
     private readonly IUserAccessor _userAccessor;
+    private readonly IImageAccessor _imageAccessor;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor)
     {
+        _imageAccessor = imageAccessor;
         _userAccessor = userAccessor;
         _tokenService = tokenService;
         _signInManager = signInManager;
@@ -71,6 +73,27 @@ public class AccountController : ControllerBase
         if (!result.Succeeded) return BadRequest("Problem registering user");
 
         return Ok("User registered");
+    }
+
+    [HttpPost("image")]
+    public async Task<IActionResult> UploadAvatar([FromForm] IFormFile File)
+    {
+        var user = await _userManager.FindByEmailAsync(_userAccessor.GetEmail());
+
+        if (user == null) return Unauthorized();
+
+        var fileName = $"{Guid.NewGuid().ToString()}_{File.FileName}";
+
+        var path = await _imageAccessor.AddImage(File, fileName);
+
+        if (path == null) return BadRequest("Problem uploading image");
+
+        user.AvatarName = fileName;
+        user.AvatarUrl = path;
+
+        await _userManager.UpdateAsync(user);
+
+        return Ok(path);
     }
 
     [HttpGet]

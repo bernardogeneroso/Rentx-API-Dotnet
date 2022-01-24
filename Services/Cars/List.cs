@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
 
 namespace Services.Cars
 {
@@ -17,15 +18,22 @@ namespace Services.Cars
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            private readonly IOriginAccessor _originAccessor;
+            public Handler(DataContext context, IOriginAccessor originAccessor, IMapper mapper)
             {
+                _originAccessor = originAccessor;
                 _mapper = mapper;
                 _context = context;
             }
 
             public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var cars = await _context.Cars.Include(c => c.CarImages).Include(c => c.CarDetails).AsSplitQuery().ProjectTo<CarDto>(_mapper.ConfigurationProvider).ToListAsync();
+                var cars = await _context.Cars
+                                        .Include(c => c.CarImages)
+                                        .Include(c => c.CarDetails)
+                                        .AsSplitQuery()
+                                        .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                                        .ToListAsync();
 
                 return Result<List<CarDto>>.Success(cars);
             }

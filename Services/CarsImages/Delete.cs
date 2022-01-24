@@ -61,7 +61,7 @@ public class Delete
 
             if (!result) return Result<Unit>.Failure("Failed to delete the image");
 
-            return Result<Unit>.Success(Unit.Value);
+            return Result<Unit>.SuccessNoContent(Unit.Value);
         }
     }
 }
