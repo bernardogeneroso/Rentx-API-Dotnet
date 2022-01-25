@@ -26,6 +26,14 @@ public class MappingProfiles : Profile
                             IsMain = x.IsMain
                         })));
         CreateMap<CarImage, CarImageDto>();
+        CreateMap<Car, FavoriteCarDto>()
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.CarImages.
+                    Select(x => new CarImageDto
+                    {
+                        ImageName = x.ImageName,
+                        Url = $"{currentOrigin}/{x.ImageName}",
+                        IsMain = x.IsMain
+                    })));
     }
 }
 
