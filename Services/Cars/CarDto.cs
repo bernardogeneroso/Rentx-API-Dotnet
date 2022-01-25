@@ -1,4 +1,3 @@
-using Services.CarsDetails;
 using Services.CarsImages;
 
 namespace Services.Cars;

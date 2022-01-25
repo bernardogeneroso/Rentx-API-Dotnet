@@ -6,36 +6,40 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 
-namespace Services.Cars
+namespace Services.Cars;
+
+public class List
 {
-    public class List
+    public class Query : IRequest<Result<List<CarDto>>>
     {
-        public class Query : IRequest<Result<List<CarDto>>>
+        public string Search { get; set; }
+    }
+
+    public class Handler : IRequestHandler<Query, Result<List<CarDto>>>
+    {
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        private readonly IOriginAccessor _originAccessor;
+        public Handler(DataContext context, IOriginAccessor originAccessor, IMapper mapper)
         {
+            _originAccessor = originAccessor;
+            _mapper = mapper;
+            _context = context;
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<CarDto>>>
+        public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            private readonly DataContext _context;
-            private readonly IMapper _mapper;
-            private readonly IOriginAccessor _originAccessor;
-            public Handler(DataContext context, IOriginAccessor originAccessor, IMapper mapper)
+            var query = _context.Cars
+                                    .Include(c => c.CarImages)
+                                    .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                                    .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(request.Search))
             {
-                _originAccessor = originAccessor;
-                _mapper = mapper;
-                _context = context;
+                query = query.Where(c => c.Brand.ToLower().Contains(request.Search.ToLower()) || c.Model.ToLower().Contains(request.Search.ToLower()));
             }
 
-            public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var cars = await _context.Cars
-                                        .Include(c => c.CarImages)
-                                        .AsSplitQuery()
-                                        .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
-                                        .ToListAsync();
-
-                return Result<List<CarDto>>.Success(cars);
-            }
+            return Result<List<CarDto>>.Success(await query.ToListAsync());
         }
     }
 }

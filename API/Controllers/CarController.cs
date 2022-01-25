@@ -10,9 +10,9 @@ namespace API.Controllers;
 public class CarController : BaseApiController
 {
     [HttpGet]
-    public async Task<IActionResult> GetCars()
+    public async Task<IActionResult> GetCars([FromQuery] string search = null)
     {
-        return HandleResult(await Mediator.Send(new List.Query()));
+        return HandleResult(await Mediator.Send(new List.Query { Search = search }));
     }
 
     [HttpPost]
