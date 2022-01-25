@@ -1,6 +1,7 @@
 using AutoMapper;
 using Models;
 using Services.Cars;
+using Services.CarsAppointments;
 using Services.CarsDetails;
 using Services.CarsImages;
 
@@ -25,6 +26,7 @@ public class MappingProfiles : Profile
                             IsMain = x.IsMain
                         })));
         CreateMap<CarImage, CarImageDto>();
+        CreateMap<CarAppointmentDto, CarAppointment>();
     }
 }
 

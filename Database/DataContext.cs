@@ -13,6 +13,7 @@ public class DataContext : IdentityDbContext<AppUser>
     public DbSet<Car> Cars { get; set; }
     public DbSet<CarImage> CarsImages { get; set; }
     public DbSet<CarDetail> CarsDetails { get; set; }
+    public DbSet<CarAppointment> CarsAppointments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -37,5 +38,18 @@ public class DataContext : IdentityDbContext<AppUser>
             .WithOne(c => c.CarDetails)
             .HasForeignKey<CarDetail>(cd => cd.Plate)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<CarAppointment>().ToTable("CarsAppointments").HasKey(ca => ca.Id);
+        builder.Entity<CarAppointment>()
+            .HasOne(ca => ca.Car)
+            .WithMany(c => c.CarAppointments)
+            .HasForeignKey(ca => ca.Plate)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.Entity<CarAppointment>()
+            .HasOne(ca => ca.User)
+            .WithMany(u => u.CarAppointments)
+            .HasForeignKey(ca => ca.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
 }

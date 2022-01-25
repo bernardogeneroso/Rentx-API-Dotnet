@@ -7,9 +7,11 @@ public class Seed
 {
     public static async Task SeedData(UserManager<AppUser> userManager, DataContext context)
     {
+        var users = new List<AppUser>();
+
         if (!userManager.Users.Any())
         {
-            var users = new List<AppUser>
+            users = new List<AppUser>
             {
                 new AppUser
                 {
@@ -153,6 +155,79 @@ public class Seed
             };
 
             await context.Cars.AddRangeAsync(cars);
+
+            if (!context.CarsAppointments.Any())
+            {
+                var carsAppointments = new List<CarAppointment>
+                {
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[0],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 1, 1),
+                        EndDate = new DateTime(2022, 1, 1).AddDays(2),
+                        RentalPrice = cars[0].PricePerDay * 2
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[1],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 1, 1),
+                        EndDate = new DateTime(2022, 1, 1).AddDays(2),
+                        RentalPrice = cars[1].PricePerDay * 2
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[2],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 1, 5),
+                        EndDate = new DateTime(2022, 1, 5).AddDays(3),
+                        RentalPrice = cars[2].PricePerDay * 3
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[3],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 1, 8),
+                        EndDate = new DateTime(2022, 1, 8).AddDays(5),
+                        RentalPrice = cars[3].PricePerDay * 5
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[4],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 1, 30),
+                        EndDate = new DateTime(2022, 1, 30).AddDays(2),
+                        RentalPrice = cars[4].PricePerDay * 2
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[4],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 2, 1),
+                        EndDate = new DateTime(2022, 2, 1).AddDays(4),
+                        RentalPrice = cars[4].PricePerDay * 4
+                    },
+                    new CarAppointment
+                    {
+                        Id = Guid.NewGuid(),
+                        Car = cars[3],
+                        User = users[2],
+                        StartDate = new DateTime(2022, 2, 5),
+                        EndDate = new DateTime(2022, 2, 5).AddDays(2),
+                        RentalPrice = cars[3].PricePerDay * 2
+                    },
+                };
+
+                await context.CarsAppointments.AddRangeAsync(carsAppointments);
+            }
+
             await context.SaveChangesAsync();
         }
     }

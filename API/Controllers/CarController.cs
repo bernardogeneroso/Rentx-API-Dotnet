@@ -5,8 +5,6 @@ using Services.CarsDetails;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
 public class CarController : BaseApiController
 {
     [HttpGet]
