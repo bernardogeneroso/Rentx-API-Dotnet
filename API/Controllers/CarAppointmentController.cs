@@ -8,7 +8,6 @@ namespace API.Controllers;
 [Route("api/car/appointment")]
 public class CarAppointmentController : BaseApiController
 {
-
     [HttpPost("{plate}")]
     public async Task<IActionResult> CreateAppointment(string plate, [FromBody] CarAppointment carAppointment)
     {

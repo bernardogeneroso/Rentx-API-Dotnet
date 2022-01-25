@@ -56,4 +56,10 @@ public class CarController : BaseApiController
     {
         return HandleResult(await Mediator.Send(new Services.CarsImages.Delete.Command { Plate = plate, ImageName = imageName }));
     }
+
+    [HttpGet("favorite")]
+    public async Task<IActionResult> GetFavoriteCar()
+    {
+        return HandleResult(await Mediator.Send(new Services.Cars.FavoriteCar.Command()));
+    }
 }

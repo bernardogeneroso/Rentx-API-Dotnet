@@ -26,7 +26,6 @@ public class MappingProfiles : Profile
                             IsMain = x.IsMain
                         })));
         CreateMap<CarImage, CarImageDto>();
-        CreateMap<CarAppointmentDto, CarAppointment>();
     }
 }
 

@@ -3,7 +3,7 @@ namespace Models;
 public class CarAppointment
 {
     public Guid Id { get; set; }
-    public string Plate { get; set; }
+    public string Plate { get; set; } = "";
     public string UserId { get; set; }
     public Car Car { get; set; }
     public AppUser User { get; set; }

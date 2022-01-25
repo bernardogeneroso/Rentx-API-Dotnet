@@ -1,24 +1,26 @@
 using FluentValidation;
+using Models;
 
 namespace Services.CarsAppointments;
 
-public class CarAppointmentValidator : AbstractValidator<CarAppointmentDto>
+public class CarAppointmentValidator : AbstractValidator<CarAppointment>
 {
     public CarAppointmentValidator()
     {
-        RuleFor(x => x.Plate)
-            .NotEmpty()
-            .Length(6);
         RuleFor(x => x.StartDate)
             .Must(BeValidDate)
-            .WithMessage("Start date is required");
-        RuleFor(x => x.EndDate).Must(BeValidDate).WithMessage("End date is required");
+            .WithMessage("Start date it must be valid and required");
+        RuleFor(x => x.EndDate)
+            .Must(BeValidDate)
+            .WithMessage("End date it must be valid and required");
         RuleFor(x => x).Must(x => x.EndDate == default(DateTime) || x.StartDate == default(DateTime) || x.EndDate > x.StartDate)
             .WithMessage("End date must greater than start date");
     }
 
     private bool BeValidDate(DateTime date)
     {
-        return !date.Equals(default(DateTime));
+        if (date.Equals(default(DateTime))) return false;
+
+        return date > DateTime.Now;
     }
 }
