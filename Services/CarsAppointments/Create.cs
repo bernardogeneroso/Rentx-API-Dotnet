@@ -50,7 +50,10 @@ public class Create
             var startDate = request.CarAppointment.StartDate.Date;
             var endDate = request.CarAppointment.EndDate.Date;
 
-            var existCarAppointmentsBetweenDates = await _context.CarsAppointments.AnyAsync(x => x.Plate == car.Plate && x.StartDate >= startDate && x.EndDate <= endDate);
+            var existCarAppointmentsBetweenDates = await _context.CarsAppointments
+                        .AnyAsync(x => x.Plate == car.Plate
+                        && (startDate > x.StartDate.Date || endDate < x.StartDate.Date)
+                        && (startDate > x.EndDate.Date || endDate < x.EndDate.Date));
 
             if (existCarAppointmentsBetweenDates) return Result<Unit>.Failure("This appointment already exist");
 
