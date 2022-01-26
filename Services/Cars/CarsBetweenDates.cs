@@ -1,9 +1,12 @@
 using Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Models;
+using Services.Interfaces;
 
 namespace Services.Cars;
 
@@ -26,8 +29,10 @@ public class CarsBetweenDates
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public Handler(DataContext context, IMapper mapper)
+        private readonly IOriginAccessor _originAccessor;
+        public Handler(DataContext context, IMapper mapper, IOriginAccessor originAccessor)
         {
+            _originAccessor = originAccessor;
             _mapper = mapper;
             _context = context;
         }
@@ -37,18 +42,24 @@ public class CarsBetweenDates
             var startDate = request.Result.StartDate.Date;
             var endDate = request.Result.EndDate.Date;
 
-            var carsBetweenDates = await _context.Cars
-                    .Include(x => x.CarImages)
+            var query = _context.Cars
                     .Join(_context.CarsAppointments,
                                 car => car.Plate,
                                 appointment => appointment.Plate,
                                 (car, appointment) => new { car, appointment })
-                    .Where(x => x.appointment.StartDate >= startDate && x.appointment.EndDate <= endDate)
-                    .ToListAsync();
 
-            var carDto = _mapper.Map<List<CarDto>>(carsBetweenDates);
+                    .Where(x =>
+                            (startDate > x.appointment.StartDate.Date || endDate < x.appointment.StartDate.Date)
+                        && (startDate > x.appointment.EndDate.Date || endDate < x.appointment.EndDate.Date)
+                        && request.Result.Fuel == x.car.Fuel
+                        && request.Result.Transmission == x.car.Transmission
+                    )
+                    .Select(x => x.car)
+                    .Distinct()
+                    .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                    .AsQueryable();
 
-            return Result<List<CarDto>>.Success(carDto);
+            return Result<List<CarDto>>.Success(await query.ToListAsync());
         }
     }
 }
