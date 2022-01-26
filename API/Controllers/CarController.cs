@@ -60,6 +60,6 @@ public class CarController : BaseApiController
     [HttpGet("favorite")]
     public async Task<IActionResult> GetFavoriteCar()
     {
-        return HandleResult(await Mediator.Send(new Services.Cars.FavoriteCar.Command()));
+        return HandleResult(await Mediator.Send(new Services.CarsAppointments.FavoriteCar.Query()));
     }
 }

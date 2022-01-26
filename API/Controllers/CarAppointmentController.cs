@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Services.CarsAppointments;
 
 namespace API.Controllers;
 
@@ -13,6 +12,12 @@ public class CarAppointmentController : BaseApiController
     {
         carAppointment.Plate = plate;
 
-        return HandleResult(await Mediator.Send(new Create.Command { CarAppointment = carAppointment }));
+        return HandleResult(await Mediator.Send(new Services.CarsAppointments.Create.Command { CarAppointment = carAppointment }));
+    }
+
+    [HttpGet("scheduled")]
+    public async Task<IActionResult> GetUserScheduledCars()
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsAppointments.UserScheduledCars.Query()));
     }
 }

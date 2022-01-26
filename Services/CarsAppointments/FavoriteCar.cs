@@ -5,15 +5,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 
-namespace Services.Cars;
+namespace Services.CarsAppointments;
 
 public class FavoriteCar
 {
-    public class Command : IRequest<Result<FavoriteCarDto>>
+    public class Query : IRequest<Result<FavoriteCarDto>>
     {
     }
 
-    public class Handler : IRequestHandler<Command, Result<FavoriteCarDto>>
+    public class Handler : IRequestHandler<Query, Result<FavoriteCarDto>>
     {
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
@@ -25,7 +25,7 @@ public class FavoriteCar
             _context = context;
         }
 
-        public async Task<Result<FavoriteCarDto>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<FavoriteCarDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
 

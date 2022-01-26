@@ -1,4 +1,6 @@
-namespace Services.Cars;
+using Services.Cars;
+
+namespace Services.CarsAppointments;
 
 public class FavoriteCarDto : CarDto
 {
