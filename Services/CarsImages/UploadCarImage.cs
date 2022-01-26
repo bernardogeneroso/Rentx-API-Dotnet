@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using Database;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -16,17 +17,6 @@ public class UploadCarImage
     {
         public string Plate { get; set; }
         public IFormFile File { get; set; }
-    }
-
-    public class CommandValidator : AbstractValidator<Command>
-    {
-        public CommandValidator()
-        {
-            RuleFor(x => x.Plate).Length(6).NotEmpty();
-            RuleFor(x => x.File.Length).NotNull().LessThanOrEqualTo(100)
-                .WithMessage("File size is larger than allowed");
-            RuleFor(x => x.File.ContentType).Must(x => x.Contains("image")).WithMessage("File must be an image").NotEmpty();
-        }
     }
 
     public class Handler : IRequestHandler<Command, Result<CarImageDto>>
@@ -45,7 +35,11 @@ public class UploadCarImage
         {
             if (request.File.Length > 0)
             {
-                // TODO: Verify path of the image
+                // Manual validation using FluentValidation
+                var validator = new UploadCarImageValidator();
+                var resultValidation = await validator.ValidateAsync(request, cancellationToken);
+
+                if (!resultValidation.IsValid) return Result<CarImageDto>.Failure("Failed to upload image", resultValidation);
 
                 var car = await _context.Cars.Include(i => i.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 

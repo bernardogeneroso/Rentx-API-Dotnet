@@ -1,3 +1,5 @@
+using FluentValidation.Results;
+
 namespace Application.Core;
 
 public class Result<T>
@@ -6,6 +8,7 @@ public class Result<T>
     public bool IsSuccessNoContent { get; set; }
     public T Value { get; set; }
     public string Error { get; set; }
+    public ValidationResult FluentValidationError { get; set; } = null;
 
     public static Result<T> Success(T value)
     {
@@ -26,12 +29,13 @@ public class Result<T>
         };
     }
 
-    public static Result<T> Failure(string error)
+    public static Result<T> Failure(string error, ValidationResult fluentValidationError = null)
     {
         return new Result<T>
         {
             IsSuccess = false,
-            Error = error
+            Error = error,
+            FluentValidationError = fluentValidationError
         };
     }
 }

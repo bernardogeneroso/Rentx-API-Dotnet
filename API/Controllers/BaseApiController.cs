@@ -1,4 +1,5 @@
 using Application.Core;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,11 @@ public class BaseApiController : ControllerBase
         if (result.IsSuccess && result.Value == null)
             return NotFound();
 
-        return BadRequest(result.Error);
+        if (result.Error != null && result.FluentValidationError == null)
+            return BadRequest(result.Error);
+
+
+        result.FluentValidationError.AddToModelState(ModelState, null);
+        return ValidationProblem();
     }
 }

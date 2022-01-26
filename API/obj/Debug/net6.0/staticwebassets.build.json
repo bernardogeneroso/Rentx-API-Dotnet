@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fIJM2Gn9dI1nLSymix4+JBYzC0fvo1qz3JgpNq9zrF4=",
+  "Hash": "h5TEG/qYsng182TAoBvxquI/o2QoWZQGiYBcpEHd+1A=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -66,6 +66,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/349feb39-2111-4771-a7dc-43113914a4ed_Dog_29.png"
+    },
+    {
+      "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/737f5430-c3cd-45d3-965e-c02526b69064_Dog_5.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/",
+      "BasePath": "_content/API",
+      "RelativePath": "images/737f5430-c3cd-45d3-965e-c02526b69064_Dog_5.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/737f5430-c3cd-45d3-965e-c02526b69064_Dog_5.png"
     }
   ]
 }

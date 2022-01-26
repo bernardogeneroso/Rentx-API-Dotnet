@@ -4,7 +4,6 @@ using AutoMapper.QueryableExtensions;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Services.Cars;
 using Services.Interfaces;
 
 namespace Services.CarsAppointments;
