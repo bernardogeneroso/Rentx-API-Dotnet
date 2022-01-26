@@ -45,7 +45,7 @@ public class MappingProfiles : Profile
                 ImageName = x.ImageName,
                 Url = $"{currentOrigin}/{x.ImageName}",
                 IsMain = x.IsMain
-            })));
+            }).OrderByDescending(x => x.IsMain)));
 
         CreateMap<CarImage, CarImageDto>();
 

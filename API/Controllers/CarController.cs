@@ -58,6 +58,12 @@ public class CarController : BaseApiController
         return HandleResult(await Mediator.Send(new Services.CarsImages.Delete.Command { Plate = plate, ImageName = imageName }));
     }
 
+    [HttpPost("image/{plate}/setMain")]
+    public async Task<IActionResult> SetMainImage(string plate, [FromQuery] string imageName)
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsImages.SetMain.Command { Plate = plate, ImageName = imageName }));
+    }
+
     [HttpGet("favorite")]
     public async Task<IActionResult> GetFavoriteCar()
     {

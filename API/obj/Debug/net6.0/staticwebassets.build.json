@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ed7sMj+IrFcSUhNscAFTRQWICYTgqQKVfDPFPRuqQNM=",
+  "Hash": "BdRJqXe0XT+RR/siFYffj+pfCXIck1/3YF56pBBu3cc=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -68,6 +68,57 @@
       "OriginalItemSpec": "wwwroot/images/349feb39-2111-4771-a7dc-43113914a4ed_Dog_29.png"
     },
     {
+      "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/3e7e0b68-ca75-4413-9841-904c8886c558_Dog_15.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/",
+      "BasePath": "_content/API",
+      "RelativePath": "images/3e7e0b68-ca75-4413-9841-904c8886c558_Dog_15.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/3e7e0b68-ca75-4413-9841-904c8886c558_Dog_15.png"
+    },
+    {
+      "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/51119186-7e38-4e95-a4ec-ddc80167851d_Dog_23.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/",
+      "BasePath": "_content/API",
+      "RelativePath": "images/51119186-7e38-4e95-a4ec-ddc80167851d_Dog_23.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/51119186-7e38-4e95-a4ec-ddc80167851d_Dog_23.png"
+    },
+    {
+      "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/63500e26-106c-4c63-8465-cc6e07296607_Dog_21.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/",
+      "BasePath": "_content/API",
+      "RelativePath": "images/63500e26-106c-4c63-8465-cc6e07296607_Dog_21.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/63500e26-106c-4c63-8465-cc6e07296607_Dog_21.png"
+    },
+    {
       "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/737f5430-c3cd-45d3-965e-c02526b69064_Dog_5.png",
       "SourceId": "API",
       "SourceType": "Discovered",
@@ -100,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/adcf4440-1f95-4a4e-af98-8ab726776cb5_Dog_4.png"
+    },
+    {
+      "Identity": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/images/ef17e59a-2f90-4f4c-a737-cb8a02459770_Dog_13.png",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/wwwroot/",
+      "BasePath": "_content/API",
+      "RelativePath": "images/ef17e59a-2f90-4f4c-a737-cb8a02459770_Dog_13.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/ef17e59a-2f90-4f4c-a737-cb8a02459770_Dog_13.png"
     }
   ]
 }
