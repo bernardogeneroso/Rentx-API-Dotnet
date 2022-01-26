@@ -101,7 +101,7 @@ public class AccountController : ControllerBase
 
         await _userManager.UpdateAsync(user);
 
-        return Ok(path);
+        return NoContent();
     }
 
     [HttpGet]
@@ -121,11 +121,11 @@ public class AccountController : ControllerBase
             DisplayName = user.DisplayName,
             Username = user.UserName,
             Token = _tokenService.CreateToken(user),
-            Avatar = new Avatar
+            Avatar = pathImage != null ? new Avatar
             {
                 AvatarName = user.AvatarName,
                 Url = pathImage,
-            }
+            } : null
         };
 
         return userDto;

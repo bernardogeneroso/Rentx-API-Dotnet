@@ -1,8 +1,6 @@
 using Application.Core;
 using AutoMapper;
 using Database;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -13,13 +11,13 @@ namespace Services.CarsImages;
 
 public class UploadCarImage
 {
-    public class Command : IRequest<Result<CarImageDto>>
+    public class Command : IRequest<Result<Unit>>
     {
         public string Plate { get; set; }
         public IFormFile File { get; set; }
     }
 
-    public class Handler : IRequestHandler<Command, Result<CarImageDto>>
+    public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -31,25 +29,25 @@ public class UploadCarImage
             _context = context;
         }
 
-        public async Task<Result<CarImageDto>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.File.Length > 0)
+            if (request.File.Length == 1)
             {
                 // Manual validation using FluentValidation
                 var validator = new UploadCarImageValidator();
                 var resultValidation = await validator.ValidateAsync(request, cancellationToken);
 
-                if (!resultValidation.IsValid) return Result<CarImageDto>.Failure("Failed to upload image", resultValidation);
+                if (!resultValidation.IsValid) return Result<Unit>.Failure("Failed to upload image", resultValidation);
 
                 var car = await _context.Cars.Include(i => i.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 
-                if (car == null) return Result<CarImageDto>.Failure("Failed to upload image");
+                if (car == null) return Result<Unit>.Failure("Failed to upload image");
 
                 var fileName = $"{Guid.NewGuid().ToString()}_{request.File.FileName}";
 
                 var path = await _imageAccessor.AddImage(request.File, fileName);
 
-                if (path == null) return Result<CarImageDto>.Failure("Failed to upload image");
+                if (path == null) return Result<Unit>.Failure("Failed to upload image");
 
                 var currentMain = car.CarImages.FirstOrDefault(x => x.IsMain);
 
@@ -64,16 +62,12 @@ public class UploadCarImage
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<CarImageDto>.Failure("Failed to upload image");
+                if (!result) return Result<Unit>.Failure("Failed to upload image");
 
-                var carImageDto = _mapper.Map<CarImageDto>(carImage);
-
-                carImageDto.Url = path;
-
-                return Result<CarImageDto>.Success(carImageDto);
+                return Result<Unit>.SuccessNoContent(Unit.Value);
             }
 
-            return Result<CarImageDto>.Failure("Failed to upload image");
+            return Result<Unit>.Failure("Failed to upload image");
         }
     }
 }
