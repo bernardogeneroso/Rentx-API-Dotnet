@@ -31,7 +31,7 @@ public class UploadCarImage
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.File.Length == 1)
+            if (request.File.Length > 0)
             {
                 // Manual validation using FluentValidation
                 var validator = new UploadCarImageValidator();

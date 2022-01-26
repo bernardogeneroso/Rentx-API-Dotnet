@@ -16,5 +16,5 @@ public class CarDto
     public float PricePerDay { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public CarImageDto[] Images { get; set; }
+    public CarImageDto Image { get; set; }
 }

@@ -14,38 +14,42 @@ public class MappingProfiles : Profile
         string currentOrigin = null;
 
         CreateMap<Car, Car>();
-        CreateMap<CarDetailDto, CarDetail>();
-        CreateMap<CarDetail, CarDetailDto>();
         CreateMap<Car, CarDto>()
-            .ForMember(dest => dest.Images, opt =>
-                    opt.MapFrom(src => src.CarImages.
-                        Select(x => new CarImageDto
-                        {
-                            ImageName = x.ImageName,
-                            Url = $"{currentOrigin}/{x.ImageName}",
-                            IsMain = x.IsMain
-                        })));
-        CreateMap<CarAppointment, CarAppointmentDto>();
+            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CarImages.Select(x => new CarImageDto
+            {
+                ImageName = x.ImageName,
+                Url = $"{currentOrigin}/{x.ImageName}",
+                IsMain = x.IsMain
+            }).FirstOrDefault(x => x.IsMain)));
         CreateMap<Car, CarScheduledDto>()
-            .ForMember(dest => dest.Images, opt =>
-                    opt.MapFrom(src => src.CarImages.
-                        Select(x => new CarImageDto
-                        {
-                            ImageName = x.ImageName,
-                            Url = $"{currentOrigin}/{x.ImageName}",
-                            IsMain = x.IsMain
-                        })))
+            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CarImages.Select(x => new CarImageDto
+            {
+                ImageName = x.ImageName,
+                Url = $"{currentOrigin}/{x.ImageName}",
+                IsMain = x.IsMain
+            }).FirstOrDefault(x => x.IsMain)))
             .ForMember(dest => dest.Appointment, opt =>
                     opt.MapFrom(src => src.CarAppointments.FirstOrDefault(x => x.Car.Plate == src.Plate)));
-        CreateMap<CarImage, CarImageDto>();
         CreateMap<Car, FavoriteCarDto>()
-                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.CarImages.
-                    Select(x => new CarImageDto
-                    {
-                        ImageName = x.ImageName,
-                        Url = $"{currentOrigin}/{x.ImageName}",
-                        IsMain = x.IsMain
-                    })));
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CarImages.Select(x => new CarImageDto
+                {
+                    ImageName = x.ImageName,
+                    Url = $"{currentOrigin}/{x.ImageName}",
+                    IsMain = x.IsMain
+                }).FirstOrDefault(x => x.IsMain)));
+
+        CreateMap<CarDetailDto, CarDetail>();
+        CreateMap<CarDetail, CarDetailDto>()
+            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Car.CarImages.Select(x => new CarImageDto
+            {
+                ImageName = x.ImageName,
+                Url = $"{currentOrigin}/{x.ImageName}",
+                IsMain = x.IsMain
+            })));
+
+        CreateMap<CarImage, CarImageDto>();
+
+        CreateMap<CarAppointment, CarAppointmentDto>();
     }
 }
 
