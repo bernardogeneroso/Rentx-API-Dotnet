@@ -2,9 +2,11 @@ using System.Text;
 using API.Providers;
 using Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Models;
+using Providers.Security;
 
 namespace API.Middleware;
 
@@ -33,7 +35,14 @@ public static class IdentityServiceExtensions
                 ClockSkew = TimeSpan.Zero
             };
         });
-
+        services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy("IsAdmin", policy =>
+            {
+                policy.Requirements.Add(new IsAdminRequirement());
+            });
+        });
+        services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
         services.AddScoped<TokenService>();
 
         return services;

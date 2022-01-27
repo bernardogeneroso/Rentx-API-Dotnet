@@ -7,7 +7,6 @@ public class CarValidator : AbstractValidator<Car>
 {
     public CarValidator()
     {
-        RuleFor(x => x.Plate).Length(6).NotEmpty();
         RuleFor(x => x.Brand).NotEmpty();
         RuleFor(x => x.Model).NotEmpty();
         RuleFor(x => x.Color).NotEmpty();

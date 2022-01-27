@@ -3,6 +3,7 @@ using AutoMapper;
 using Database;
 using FluentValidation;
 using MediatR;
+using Models;
 
 namespace Services.CarsDetails;
 
@@ -10,16 +11,14 @@ public class Edit
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public string Plate { get; set; }
-        public CarDetailDto CarDetailDto { get; set; }
+        public CarDetail CarDetail { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Plate).Length(6).NotEmpty();
-            RuleFor(x => x.CarDetailDto).NotEmpty();
+            RuleFor(x => x.CarDetail).SetValidator(new CarDetailValidator());
         }
     }
 
@@ -36,13 +35,13 @@ public class Edit
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var carDetails = await _context.CarsDetails.FindAsync(request.Plate);
+            var carDetails = await _context.CarsDetails.FindAsync(request.CarDetail.Plate);
 
             if (carDetails == null) return Result<Unit>.Failure("Failed to edit the car details");
 
             carDetails.UpdatedAt = DateTime.UtcNow;
 
-            _mapper.Map(request.CarDetailDto, carDetails);
+            _mapper.Map(request.CarDetail, carDetails);
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

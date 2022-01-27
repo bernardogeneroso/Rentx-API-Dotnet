@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
@@ -22,6 +23,7 @@ public class CarAppointmentController : BaseApiController
         return HandleResult(await Mediator.Send(new Services.CarsAppointments.UserScheduledCars.Query()));
     }
 
+    [AllowAnonymous]
     [HttpGet("between-dates")]
     public async Task<IActionResult> GetCarsBetweenDates([FromQuery] CarsBetweenDatesResult carsBetweenDates)
     {

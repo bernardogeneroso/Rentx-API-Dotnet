@@ -38,7 +38,7 @@ public class MappingProfiles : Profile
                     IsMain = x.IsMain
                 }).FirstOrDefault(x => x.IsMain)));
 
-        CreateMap<CarDetailDto, CarDetail>();
+        CreateMap<CarDetail, CarDetail>();
         CreateMap<CarDetail, CarDetailDto>()
             .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Car.CarImages.Select(x => new CarImageDto
             {

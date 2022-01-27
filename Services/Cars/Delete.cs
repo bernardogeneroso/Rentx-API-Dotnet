@@ -2,6 +2,8 @@ using Application.Core;
 using Database;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
 
 namespace Services.Cars;
 
@@ -23,16 +25,26 @@ public class Delete
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        public Handler(DataContext context)
+        private readonly IImageAccessor _imageAccessor;
+        public Handler(DataContext context, IImageAccessor imageAccessor)
         {
+            _imageAccessor = imageAccessor;
             _context = context;
         }
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var car = _context.Cars.Find(request.Plate);
+            var car = await _context.Cars.Include(x => x.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 
             if (car == null) return null;
+
+            if (car.CarImages.Any())
+            {
+                foreach (var image in car.CarImages)
+                {
+                    _imageAccessor.DeleteImage(image.ImageName);
+                }
+            }
 
             _context.Cars.Remove(car);
 
