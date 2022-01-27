@@ -58,9 +58,9 @@ public class UploadCarImage
                     IsMain = currentMain?.IsMain == true ? false : true
                 };
 
-                await _context.CarsImages.AddAsync(carImage);
+                car.CarImages.Add(carImage);
 
-                var result = await _context.SaveChangesAsync() > 0;
+                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (!result) return Result<Unit>.Failure("Failed to upload image");
 

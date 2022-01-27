@@ -14,7 +14,7 @@ public class Car
     public float PricePerDay { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public ICollection<CarImage> CarImages { get; set; }
-    public ICollection<CarAppointment> CarAppointments { get; set; }
+    public ICollection<CarImage> CarImages { get; set; } = new List<CarImage>();
+    public ICollection<CarAppointment> CarAppointments { get; set; } = new List<CarAppointment>();
     public CarDetail CarDetails { get; set; }
 }

@@ -20,7 +20,7 @@ public class Details
     {
         public QueryValidator()
         {
-            RuleFor(x => x.Plate).NotEmpty();
+            RuleFor(x => x.Plate).Length(6).NotEmpty();
         }
     }
 

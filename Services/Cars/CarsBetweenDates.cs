@@ -40,11 +40,8 @@ public class CarsBetweenDates
 
         public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            // 16 - 20
-            // 12 - 16
-
-            var startDate = request.Result.StartDate.Date; // 14
-            var endDate = request.Result.EndDate.Date; // 18
+            var startDate = request.Result.StartDate.Date;
+            var endDate = request.Result.EndDate.Date;
 
             var carsWithAppointmentsBetweenDates = await _context.CarsAppointments
                             .Where(x => (x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)

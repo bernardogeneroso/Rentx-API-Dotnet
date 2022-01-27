@@ -165,7 +165,7 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[0],
                         User = users[2],
-                        StartDate = DateTime.Now.AddDays(6),
+                        StartDate = DateTime.Now.AddDays(6).Date,
                         EndDate = DateTime.Now.AddDays(8).Date,
                         RentalPrice = cars[0].PricePerDay * 2
                     },

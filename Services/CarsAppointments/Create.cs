@@ -54,18 +54,20 @@ public class Create
                 .AnyAsync(x => x.Plate == car.Plate && ((x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
                     || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)));
 
-            if (existCarAppointmentsBetweenDates) return Result<Unit>.Failure("This appointment already exist");
+            if (existCarAppointmentsBetweenDates) return Result<Unit>.Failure("This car is already reserved for this period");
 
             var days = (endDate - startDate).Days;
 
-            request.CarAppointment.RentalPrice = car.PricePerDay * days;
+            var appointment = new CarAppointment
+            {
+                Car = car,
+                User = user,
+                StartDate = startDate,
+                EndDate = endDate,
+                RentalPrice = car.PricePerDay * days
+            };
 
-            request.CarAppointment.User = user;
-            request.CarAppointment.Car = car;
-            request.CarAppointment.StartDate = startDate;
-            request.CarAppointment.EndDate = endDate;
-
-            await _context.CarsAppointments.AddAsync(request.CarAppointment);
+            car.CarAppointments.Add(appointment);
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

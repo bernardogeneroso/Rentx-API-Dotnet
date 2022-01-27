@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
 using Services.CarsDetails;
-using Services.CarsImages;
 
 namespace API.Controllers;
 

@@ -18,7 +18,7 @@ public class Edit
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Plate).NotEmpty();
+            RuleFor(x => x.Plate).Length(6).NotEmpty();
             RuleFor(x => x.CarDetailDto).NotEmpty();
         }
     }

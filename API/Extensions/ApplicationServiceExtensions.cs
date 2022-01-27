@@ -1,4 +1,3 @@
-using API.Providers;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +19,6 @@ public static class ApplicationServiceExtensions
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
         });
-        // services.AddDbContext<DataContext>(opt =>
-        // {
-        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        // });
         services.AddDbContext<DataContext>(options =>
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
