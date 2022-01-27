@@ -165,8 +165,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[0],
                         User = users[2],
-                        StartDate = new DateTime(2022, 1, 1),
-                        EndDate = new DateTime(2022, 1, 1).AddDays(2),
+                        StartDate = DateTime.Now.AddDays(6),
+                        EndDate = DateTime.Now.AddDays(8).Date,
                         RentalPrice = cars[0].PricePerDay * 2
                     },
                     new CarAppointment
@@ -174,8 +174,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[1],
                         User = users[2],
-                        StartDate = new DateTime(2022, 1, 1),
-                        EndDate = new DateTime(2022, 1, 1).AddDays(2),
+                        StartDate = DateTime.Now.AddDays(40).Date,
+                        EndDate = DateTime.Now.AddDays(44).Date,
                         RentalPrice = cars[1].PricePerDay * 2
                     },
                     new CarAppointment
@@ -183,8 +183,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[2],
                         User = users[2],
-                        StartDate = new DateTime(2022, 1, 5),
-                        EndDate = new DateTime(2022, 1, 5).AddDays(3),
+                        StartDate = DateTime.Now.AddDays(20).Date,
+                        EndDate = DateTime.Now.AddDays(22).Date,
                         RentalPrice = cars[2].PricePerDay * 3
                     },
                     new CarAppointment
@@ -192,8 +192,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[3],
                         User = users[2],
-                        StartDate = new DateTime(2022, 1, 8),
-                        EndDate = new DateTime(2022, 1, 8).AddDays(5),
+                        StartDate = DateTime.Now.Date,
+                        EndDate = DateTime.Now.AddDays(2).Date,
                         RentalPrice = cars[3].PricePerDay * 5
                     },
                     new CarAppointment
@@ -201,8 +201,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[4],
                         User = users[2],
-                        StartDate = new DateTime(2022, 1, 30),
-                        EndDate = new DateTime(2022, 1, 30).AddDays(2),
+                        StartDate = DateTime.Now.AddDays(4).Date,
+                        EndDate = DateTime.Now.AddDays(6).Date,
                         RentalPrice = cars[4].PricePerDay * 2
                     },
                     new CarAppointment
@@ -210,8 +210,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[4],
                         User = users[2],
-                        StartDate = new DateTime(2022, 2, 1),
-                        EndDate = new DateTime(2022, 2, 1).AddDays(4),
+                        StartDate = DateTime.Now.AddDays(1).Date,
+                        EndDate = DateTime.Now.AddDays(4).Date,
                         RentalPrice = cars[4].PricePerDay * 4
                     },
                     new CarAppointment
@@ -219,8 +219,8 @@ public class Seed
                         Id = Guid.NewGuid(),
                         Car = cars[3],
                         User = users[2],
-                        StartDate = new DateTime(2022, 2, 5),
-                        EndDate = new DateTime(2022, 2, 5).AddDays(2),
+                        StartDate = DateTime.Now.AddDays(10).Date,
+                        EndDate = DateTime.Now.AddDays(12).Date,
                         RentalPrice = cars[3].PricePerDay * 2
                     },
                 };

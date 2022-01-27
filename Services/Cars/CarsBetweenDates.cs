@@ -5,6 +5,7 @@ using Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Models;
 using Services.Interfaces;
 
@@ -39,27 +40,27 @@ public class CarsBetweenDates
 
         public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var startDate = request.Result.StartDate.Date;
-            var endDate = request.Result.EndDate.Date;
+            // 16 - 20
+            // 12 - 16
 
-            var query = _context.Cars
-                    .Join(_context.CarsAppointments,
-                                car => car.Plate,
-                                appointment => appointment.Plate,
-                                (car, appointment) => new { car, appointment })
+            var startDate = request.Result.StartDate.Date; // 14
+            var endDate = request.Result.EndDate.Date; // 18
 
-                    .Where(x =>
-                            (startDate > x.appointment.StartDate.Date || endDate < x.appointment.StartDate.Date)
-                        && (startDate > x.appointment.EndDate.Date || endDate < x.appointment.EndDate.Date)
-                        && request.Result.Fuel == x.car.Fuel
-                        && request.Result.Transmission == x.car.Transmission
-                    )
-                    .Select(x => x.car)
-                    .Distinct()
-                    .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
-                    .AsQueryable();
+            var carsWithAppointmentsBetweenDates = await _context.CarsAppointments
+                            .Where(x => (x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
+                                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate))
+                            .Select(x => x.Plate)
+                            .Distinct()
+                            .ToListAsync();
 
-            return Result<List<CarDto>>.Success(await query.ToListAsync());
+            if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDto>>.Failure("Faield getting cars between dates");
+
+            var cars = await _context.Cars
+                            .Where(x => !carsWithAppointmentsBetweenDates.Contains(x.Plate))
+                            .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                            .ToListAsync();
+
+            return Result<List<CarDto>>.Success(cars);
         }
     }
 }

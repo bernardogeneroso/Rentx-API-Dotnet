@@ -15,6 +15,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.1",
           "Microsoft.EntityFrameworkCore.Design": "6.0.1",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.2",
           "Providers": "1.0.0",
           "Services": "1.0.0",
           "Swashbuckle.AspNetCore": "6.2.3"
@@ -426,6 +427,31 @@
           }
         }
       },
+      "Npgsql/6.0.2": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Npgsql.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.2.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL/6.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.1",
+          "Microsoft.EntityFrameworkCore.Abstractions": "6.0.1",
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.1",
+          "Npgsql": "6.0.2"
+        },
+        "runtime": {
+          "lib/net6.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "6.0.2.0",
+            "fileVersion": "6.0.2.0"
+          }
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3/2.0.6": {
         "dependencies": {
           "SQLitePCLRaw.core": "2.0.6",
@@ -619,7 +645,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "6.0.1",
-          "Models": "1.0.0"
+          "Models": "1.0.0",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.2"
         },
         "runtime": {
           "Database.dll": {}
@@ -991,6 +1018,20 @@
       "sha512": "sha512-Nug3rO+7Kl5/SBAadzSMAVgqDlfGjJZ0GenQrLywJ84XGKO0uRqkunz5Wyl0SDwcR71bAATXvSdbdzPrYRYKGw==",
       "path": "microsoft.openapi/1.2.3",
       "hashPath": "microsoft.openapi.1.2.3.nupkg.sha512"
+    },
+    "Npgsql/6.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-j/BJY/1lqtu5ssfGEi9D+qJ/3OMrK8ZdicsW4SldV49CahRVXVHldj636ucVcEqJPNDI0h+/PWJD7oHsQ/cFAQ==",
+      "path": "npgsql/6.0.2",
+      "hashPath": "npgsql.6.0.2.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL/6.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2snTLONAs26dKdtInX4CAorkE//eDMOAVifh2EXZ/REzq5typb7MkENIix3Ma6ycukmAzCUw+br2AFdXmkmxbw==",
+      "path": "npgsql.entityframeworkcore.postgresql/6.0.2",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.6.0.2.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.0.6": {
       "type": "package",

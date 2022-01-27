@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pwPAxOT8QCOSCoy4VwrgQHEk11s9zH2mu1Z+BpfqhnMaAyvF5Yg38wuVcPntf/kTnvf6w1r7Pp8xL7E42IjllQ==",
+  "dgSpecHash": "3oKikvJC6m9AdMY3OOFc9Qf1ETymU5ucDZ/8du1GO5+unn5Jbc/1bYCKr0W/CvHhuNGMniclETaPvMGhpWhVhQ==",
   "success": true,
   "projectFilePath": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/Providers/Providers.csproj",
   "expectedPackageFiles": [
@@ -47,6 +47,8 @@
     "/Users/bernardogeneroso/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.10.0/microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/microsoft.identitymodel.tokens/6.10.0/microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/microsoft.net.http.headers/2.2.0/microsoft.net.http.headers.2.2.0.nupkg.sha512",
+    "/Users/bernardogeneroso/.nuget/packages/npgsql/6.0.2/npgsql.6.0.2.nupkg.sha512",
+    "/Users/bernardogeneroso/.nuget/packages/npgsql.entityframeworkcore.postgresql/6.0.2/npgsql.entityframeworkcore.postgresql.6.0.2.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.0.6/sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.core/2.0.6/sqlitepclraw.core.2.0.6.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.0.6/sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",

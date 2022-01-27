@@ -27,6 +27,8 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.

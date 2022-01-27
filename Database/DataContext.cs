@@ -22,6 +22,18 @@ public class DataContext : IdentityDbContext<AppUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
 
+        foreach (var property in builder.Model.GetEntityTypes()
+                 .SelectMany(t => t.GetProperties())
+                 .Where
+                 (p
+                  => p.ClrType == typeof(DateTime)
+                     || p.ClrType == typeof(DateTime?)
+                 )
+        )
+        {
+            property.SetColumnType("timestamp without time zone");
+        }
+
         builder.Entity<Car>(c => c.HasKey("Plate"));
 
 

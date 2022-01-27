@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bLYQfcoSakaMGAD4panAhmY59E2MUzBr2hQp+rPaZjCRwWPHn3fAlbua0w+ruqKAzb4UxLWsdDI3+6BqkzHh5Q==",
+  "dgSpecHash": "lNZ2ZeIjnojZfwlJaMqZjuHFI3Jy9H1D0Cf4XmyWMQWTcnklIsD/G8/XmwKoS8kJW72j9bTmAVBo9Qv032u5LQ==",
   "success": true,
   "projectFilePath": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/Services/Services.csproj",
   "expectedPackageFiles": [
@@ -35,6 +35,8 @@
     "/Users/bernardogeneroso/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "/Users/bernardogeneroso/.nuget/packages/npgsql/6.0.2/npgsql.6.0.2.nupkg.sha512",
+    "/Users/bernardogeneroso/.nuget/packages/npgsql.entityframeworkcore.postgresql/6.0.2/npgsql.entityframeworkcore.postgresql.6.0.2.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.0.6/sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.core/2.0.6/sqlitepclraw.core.2.0.6.nupkg.sha512",
     "/Users/bernardogeneroso/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.0.6/sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
