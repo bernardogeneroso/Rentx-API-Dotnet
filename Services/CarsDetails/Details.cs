@@ -39,7 +39,7 @@ public class Details
         public async Task<Result<CarDetailDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var carDetail = await _context.CarsDetails
-                    .Include(x => x.Car.CarImages)
+                    .Include(x => x.Car.Images)
                     .Where(x => x.Car.Plate == request.Plate)
                     .ProjectTo<CarDetailDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                     .SingleOrDefaultAsync(x => x.Plate == request.Plate);

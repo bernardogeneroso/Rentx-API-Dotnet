@@ -30,7 +30,7 @@ public class List
         public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = _context.Cars
-                                    .Include(c => c.CarImages)
+                                    .Include(c => c.Images)
                                     .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                                     .AsQueryable();
 

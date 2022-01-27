@@ -1,9 +1,13 @@
 using Application.Core;
+using AutoMapper;
 using Database;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Services.SignalR.Hubs;
+using Services.SignalR.Interfaces;
 
 namespace Services.Cars;
 
@@ -25,8 +29,12 @@ public class Create
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        public Handler(DataContext context)
+        private readonly IHubContext<NotificationHub, INotificationHub> _hubContext;
+        private readonly IMapper _mapper;
+        public Handler(DataContext context, IMapper mapper, IHubContext<NotificationHub, INotificationHub> hubContext)
         {
+            _mapper = mapper;
+            _hubContext = hubContext;
             _context = context;
         }
 
@@ -36,11 +44,13 @@ public class Create
 
             if (carExist) return Result<Unit>.Failure("Car already exists");
 
-            await _context.Cars.AddAsync(request.Car);
+            _context.Cars.Add(request.Car);
 
             var result = await _context.SaveChangesAsync() > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to create car");
+
+            await _hubContext.Clients.All.BroadcastMessage($"New car has been created | {request.Car.Brand} {request.Car.Model}");
 
             return Result<Unit>.SuccessNoContent(Unit.Value);
         }

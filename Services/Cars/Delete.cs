@@ -34,13 +34,13 @@ public class Delete
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var car = await _context.Cars.Include(x => x.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
+            var car = await _context.Cars.Include(x => x.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 
             if (car == null) return null;
 
-            if (car.CarImages.Any())
+            if (car.Images.Any())
             {
-                foreach (var image in car.CarImages)
+                foreach (var image in car.Images)
                 {
                     _imageAccessor.DeleteImage(image.ImageName);
                 }

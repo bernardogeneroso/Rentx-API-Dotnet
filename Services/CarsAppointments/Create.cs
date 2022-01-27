@@ -67,7 +67,7 @@ public class Create
                 RentalPrice = car.PricePerDay * days
             };
 
-            car.CarAppointments.Add(appointment);
+            car.Appointments.Add(appointment);
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

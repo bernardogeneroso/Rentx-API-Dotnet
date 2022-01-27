@@ -39,7 +39,7 @@ public class UploadCarImage
 
                 if (!resultValidation.IsValid) return Result<Unit>.Failure("Failed to upload image", resultValidation);
 
-                var car = await _context.Cars.Include(i => i.CarImages).FirstOrDefaultAsync(x => x.Plate == request.Plate);
+                var car = await _context.Cars.Include(i => i.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate);
 
                 if (car == null) return Result<Unit>.Failure("Failed to upload image");
 
@@ -49,7 +49,7 @@ public class UploadCarImage
 
                 if (path == null) return Result<Unit>.Failure("Failed to upload image");
 
-                var currentMain = car.CarImages.FirstOrDefault(x => x.IsMain);
+                var currentMain = car.Images.FirstOrDefault(x => x.IsMain);
 
                 var carImage = new CarImage
                 {
@@ -58,7 +58,7 @@ public class UploadCarImage
                     IsMain = currentMain?.IsMain == true ? false : true
                 };
 
-                car.CarImages.Add(carImage);
+                car.Images.Add(carImage);
 
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 

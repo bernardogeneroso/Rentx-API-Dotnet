@@ -42,7 +42,7 @@ public class UserScheduledCars
                                     (car, appointment) => new { car, appointment })
                                 .Where(x => x.appointment.UserId == user.Id)
                                 .Select(x => x.car)
-                                .OrderByDescending(x => x.CarAppointments.Any(x => x.StartDate > DateTime.Now))
+                                .OrderByDescending(x => x.Appointments.Any(x => x.StartDate > DateTime.Now))
                                 .ProjectTo<CarScheduledDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
 

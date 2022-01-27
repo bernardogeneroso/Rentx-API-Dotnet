@@ -59,7 +59,7 @@ public class Seed
                   Doors = "5",
                   Seats = "5",
                   PricePerDay = 100,
-                  CarDetails = new CarDetail
+                  Detail = new CarDetail
                   {
                     maxSpeed = 200,
                     topSpeed = 220,
@@ -80,7 +80,7 @@ public class Seed
                     Doors = "5",
                     Seats = "5",
                     PricePerDay = 999,
-                    CarDetails = new CarDetail
+                    Detail = new CarDetail
                     {
                         maxSpeed = 300,
                         topSpeed = 320,
@@ -101,7 +101,7 @@ public class Seed
                     Doors = "5",
                     Seats = "5",
                     PricePerDay = 1200,
-                    CarDetails = new CarDetail
+                    Detail = new CarDetail
                     {
                         maxSpeed = 400,
                         topSpeed = 420,
@@ -122,7 +122,7 @@ public class Seed
                     Doors = "5",
                     Seats = "5",
                     PricePerDay = 1500,
-                    CarDetails = new CarDetail
+                    Detail = new CarDetail
                     {
                         maxSpeed = 500,
                         topSpeed = 520,
@@ -143,7 +143,7 @@ public class Seed
                     Doors = "5",
                     Seats = "5",
                     PricePerDay = 1800,
-                    CarDetails = new CarDetail
+                    Detail = new CarDetail
                     {
                         maxSpeed = 600,
                         topSpeed = 620,

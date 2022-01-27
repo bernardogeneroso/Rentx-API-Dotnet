@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Services.Cars;
+using Services.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/notifications");
 
 using var scope = app.Services.CreateScope();
 

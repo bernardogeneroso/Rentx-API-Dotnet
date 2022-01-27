@@ -1,5 +1,6 @@
 using FluentValidation;
 using Models;
+using Services.CarsDetails;
 
 namespace Services.Cars;
 
@@ -7,6 +8,7 @@ public class CarValidator : AbstractValidator<Car>
 {
     public CarValidator()
     {
+        RuleFor(x => x.Plate).Length(6).NotEmpty();
         RuleFor(x => x.Brand).NotEmpty();
         RuleFor(x => x.Model).NotEmpty();
         RuleFor(x => x.Color).NotEmpty();
@@ -16,6 +18,7 @@ public class CarValidator : AbstractValidator<Car>
         RuleFor(x => x.Doors).NotEmpty();
         RuleFor(x => x.Seats).NotEmpty();
         RuleFor(x => x.PricePerDay).NotEmpty();
+        RuleFor(x => x.Detail).SetValidator(new CarDetailValidator());
     }
 
     private bool BeValidFuel(string fuel)

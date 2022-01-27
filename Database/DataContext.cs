@@ -40,26 +40,26 @@ public class DataContext : IdentityDbContext<AppUser>
         builder.Entity<CarImage>(c => c.HasKey(ci => new { ci.Plate, ci.ImageName }));
         builder.Entity<CarImage>()
             .HasOne(ci => ci.Car)
-            .WithMany(c => c.CarImages)
+            .WithMany(c => c.Images)
             .HasForeignKey(ci => ci.Plate)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<CarDetail>().ToTable("CarsDetails").HasKey(cd => cd.Plate);
         builder.Entity<CarDetail>()
             .HasOne(cd => cd.Car)
-            .WithOne(c => c.CarDetails)
+            .WithOne(c => c.Detail)
             .HasForeignKey<CarDetail>(cd => cd.Plate)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<CarAppointment>().ToTable("CarsAppointments").HasKey(ca => ca.Id);
         builder.Entity<CarAppointment>()
             .HasOne(ca => ca.Car)
-            .WithMany(c => c.CarAppointments)
+            .WithMany(c => c.Appointments)
             .HasForeignKey(ca => ca.Plate)
             .OnDelete(DeleteBehavior.Restrict);
         builder.Entity<CarAppointment>()
             .HasOne(ca => ca.User)
-            .WithMany(u => u.CarAppointments)
+            .WithMany(u => u.Appointments)
             .HasForeignKey(ca => ca.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
