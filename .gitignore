@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 API/appsettings.Development.json
-
+API/bin
 API/wwwroot/images
 
 # User-specific files

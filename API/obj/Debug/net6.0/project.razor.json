@@ -16298,8 +16298,8 @@
   "RootNamespace": "API",
   "Documents": [
     {
-      "FilePath": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/Mail/test.cshtml",
-      "TargetPath": "Mail\\test.cshtml",
+      "FilePath": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/Templates/test.cshtml",
+      "TargetPath": "Templates\\test.cshtml",
       "FileKind": "mvc"
     }
   ],

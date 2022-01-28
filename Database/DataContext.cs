@@ -34,6 +34,11 @@ public class DataContext : IdentityDbContext<AppUser>
             property.SetColumnType("timestamp without time zone");
         }
 
+        builder.Entity<RefreshToken>()
+            .HasOne(u => u.User)
+            .WithMany(t => t.RefreshTokens)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.Entity<Car>(c => c.HasKey("Plate"));
 
 
