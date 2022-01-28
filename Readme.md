@@ -16,6 +16,21 @@
 
 > Content created by [Rocketseat](https://github.com/Rocketseat);
 
+# :code: Setup appsettings.Development.json or appsettings.Development.json
+
+...other code
+"ConnectionStrings": {
+"DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=pass; Database=RentX"
+},
+"Mail": {
+"Host": "smtp.gmail.com",
+"Email": "example@gmail.com",
+"Port": 587,
+"User": "example@gmail.com",
+"Password": "pass"
+},
+"TokenKey": "super secret key"
+
 # :computer: Authors
 
 <table>

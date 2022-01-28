@@ -1,0 +1,952 @@
+{
+	"info": {
+		"_postman_id": "6ac1a6e6-2bf1-47b8-a224-445e9212e100",
+		"name": "RentX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('avatar');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"    pm.globals.set('refreshToken', user.refreshToken);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    var refreshToken = pm.globals.get('refreshToken');",
+									"    pm.expect(token).to.eql(user.token);",
+									"    pm.expect(refreshToken).to.eql(user.refreshToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@test.com\",\n    \"password\": \"Pa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Jim",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('avatar');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"    pm.globals.set('refreshToken', user.refreshToken);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    var refreshToken = pm.globals.get('refreshToken');",
+									"    pm.expect(token).to.eql(user.token);",
+									"    pm.expect(refreshToken).to.eql(user.refreshToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"jim@test.com\",\n    \"password\": \"Pa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Bob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('avatar');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"    pm.globals.set('refreshToken', user.refreshToken);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    var refreshToken = pm.globals.get('refreshToken');",
+									"    pm.expect(token).to.eql(user.token);",
+									"    pm.expect(refreshToken).to.eql(user.refreshToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bob@test.com\",\n    \"password\": \"Pa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\": \"Bernardo Generoso\",\n    \"username\": \"BernardoGeneroso\",\n    \"email\": \"test@test.com\",\n    \"password\": \"Pa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/account",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/Users/bernardogeneroso/Library/Mobile Documents/com~apple~CloudDocs/Pictures/Dog Avatars - Download/PNGs/Dog_4.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/account/image",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend email confirmation link",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/account/resendEmailConfirmationLink?email=bob@test.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"resendEmailConfirmationLink"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "bob@test.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"Q2ZESjhCUDZzOS80UUJGSHVxSnZ1cWdoU1dwZExrUUwyRVRsQXBwSzlRakFldHlBN1FoeXIxV3d4ZEtCWFFPQUM4NkpqNHdLWERGOWY4Q2ZKYzhLaXNjbTUvT3YzN0d6TGVxelV1UjFWcjlJUGpwQ1c5V1RvMjR6Y3VoY25WdEo1dS9VYVpVY3JOZzNmZjlnaDNZSitsRGx6L0FmZ3AvMk1MZHJSZlVKZUVrZk9ZWVpPUWlrcVluaFN4TEFZMVEwMWVERndwL3ZjRzU0QVJGZS9jdjl2NXNObm9zeEJaa2xFQXQyQ1pVRDM4UDYyMG5iczhkMkVkNms5RzhwSmVzYlIreGd3UT09\",\n    \"email\": \"generoso.bernardoapple@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/account/verifyEmail?token=Q2ZESjhCUDZzOS80UUJGSHVxSnZ1cWdoU1dwSEljOEtjYTJiSUtUMTg2ZzhlNkhlTjE0N3orRUZrTHgyUHNXdGl5WUVTMzlIbzlvTENvdTJIVkxrWjZTMEdudGNld0ZqRkxrd3ZySDdydk42UTRyWjZzaXFKRHFZVzNHenZaa2RraWY3NStnTzNPQTYxdHkzOTZqcXNIN1cyY2xZNE9NZmNQNHdhWlJFVThiWkpEWENWTjJHNUJtT3hoTStpbjRxVCt0d1h3THBjYkRJdmE5NEVXeHlOYnJacTlZeGM0RXJjTnJ1QStnSVpmb084MzZvTGQ5ZEtvUWUvQUVDT1J1ZVBNek13UT09&email=bob@test.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"verifyEmail"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "Q2ZESjhCUDZzOS80UUJGSHVxSnZ1cWdoU1dwSEljOEtjYTJiSUtUMTg2ZzhlNkhlTjE0N3orRUZrTHgyUHNXdGl5WUVTMzlIbzlvTENvdTJIVkxrWjZTMEdudGNld0ZqRkxrd3ZySDdydk42UTRyWjZzaXFKRHFZVzNHenZaa2RraWY3NStnTzNPQTYxdHkzOTZqcXNIN1cyY2xZNE9NZmNQNHdhWlJFVThiWkpEWENWTjJHNUJtT3hoTStpbjRxVCt0d1h3THBjYkRJdmE5NEVXeHlOYnJacTlZeGM0RXJjTnJ1QStnSVpmb084MzZvTGQ5ZEtvUWUvQUVDT1J1ZVBNek13UT09"
+								},
+								{
+									"key": "email",
+									"value": "bob@test.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('avatar');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/account/refreshToken",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"account",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cars",
+			"item": [
+				{
+					"name": "Car",
+					"item": [
+						{
+							"name": "Get cars",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "bm",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create car",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"plate\": \"L2JH88\",\n    \"brand\": \"BMW\",\n    \"model\": \"X3\",\n    \"color\": \"Yellow\",\n    \"year\": \"2021\",\n    \"fuel\": \"Diesel\",\n    \"transmission\": \"Manual\",\n    \"doors\": \"5\",\n    \"seats\": \"5\",\n    \"pricePerDay\": 680,\n    \"detail\": {\n        \"maxSpeed\": 320,\n        \"topSpeed\": 340,\n        \"acceleration\": 3.4,\n        \"weight\": 2000,\n        \"hp\": 280\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/car",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update car",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"brand\": \"BMW\",\n    \"model\": \"X3\",\n    \"color\": \"Yellow\",\n    \"year\": \"2021\",\n    \"fuel\": \"Diesel\",\n    \"transmission\": \"Manual\",\n    \"doors\": \"5\",\n    \"seats\": \"5\",\n    \"pricePerDay\": 680\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/car/L2JH88",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"L2JH88"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete car",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/L2JH88",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"L2JH88"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Favorite car",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/favorite",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"favorite"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Car details",
+					"item": [
+						{
+							"name": "Get car details",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/details/ABC123",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"details",
+										"ABC123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put car details",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"maxSpeed\": 300,\n    \"topSpeed\": 320,\n    \"acceleration\": 3.5,\n    \"weight\": 2000,\n    \"hp\": 200\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/car/details/DEF456",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"details",
+										"DEF456"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Car images",
+					"item": [
+						{
+							"name": "Upload car image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "File",
+											"type": "file",
+											"src": "/Users/bernardogeneroso/Library/Mobile Documents/com~apple~CloudDocs/Pictures/Dog Avatars - Download/PNGs/Dog_13.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/car/image/MNO345",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"image",
+										"MNO345"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set main image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/image/GHI789/setMain?imageName=63500e26-106c-4c63-8465-cc6e07296607_Dog_21.png",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"image",
+										"GHI789",
+										"setMain"
+									],
+									"query": [
+										{
+											"key": "imageName",
+											"value": "63500e26-106c-4c63-8465-cc6e07296607_Dog_21.png"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete car image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/image/ABC123?imageName=f6abe594-cbc8-49e4-aa88-4b322f30cd25_Dog_2.png",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"image",
+										"ABC123"
+									],
+									"query": [
+										{
+											"key": "imageName",
+											"value": "f6abe594-cbc8-49e4-aa88-4b322f30cd25_Dog_2.png"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Appointments",
+					"item": [
+						{
+							"name": "Create appointment",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment')",
+											"",
+											"var startDate = new Date();",
+											"",
+											"postman.setEnvironmentVariable(\"startDate-carAppointment\", moment(startDate).utc().add(50, 'days').toISOString());",
+											"postman.setEnvironmentVariable(\"endDate-carAppointment\", moment(startDate).utc().add(70, 'days').toISOString());"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"startDate\": \"{{startDate-carAppointment}}\",\n    \"endDate\": \"{{endDate-carAppointment}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/car/appointment/MNO345",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"appointment",
+										"MNO345"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get scheduled",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/appointment/scheduled",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"appointment",
+										"scheduled"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cars between dates",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment')",
+											"",
+											"var startDate = new Date();",
+											"",
+											"postman.setEnvironmentVariable(\"startDate-carAppointmentBetweenDates\", moment(startDate).utc().add(2, 'days').toISOString());",
+											"postman.setEnvironmentVariable(\"endDate-carAppointmentBetweenDates\", moment(startDate).utc().add(5, 'days').toISOString());"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/appointment/between-dates?startDate={{startDate-carAppointmentBetweenDates}}&endDate={{endDate-carAppointmentBetweenDates}}&startPricePerDay=1&endPricePerDay=1000&fuel=Gasoline&transmission=Automatic",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"appointment",
+										"between-dates"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "{{startDate-carAppointmentBetweenDates}}"
+										},
+										{
+											"key": "endDate",
+											"value": "{{endDate-carAppointmentBetweenDates}}"
+										},
+										{
+											"key": "startPricePerDay",
+											"value": "1"
+										},
+										{
+											"key": "endPricePerDay",
+											"value": "1000"
+										},
+										{
+											"key": "fuel",
+											"value": "Gasoline"
+										},
+										{
+											"key": "transmission",
+											"value": "Automatic"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete appointment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/car/appointment/0f897eec-5632-4ff9-b4f1-faa6805e577b",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"car",
+										"appointment",
+										"0f897eec-5632-4ff9-b4f1-faa6805e577b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
