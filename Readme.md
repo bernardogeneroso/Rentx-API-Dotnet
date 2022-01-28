@@ -20,7 +20,7 @@
 
 Setup appsettings.Development.json or appsettings.Development.json
 
-Setting Environment variables
+1. Setting Environment variables
    ```json
    {
       ...other code
