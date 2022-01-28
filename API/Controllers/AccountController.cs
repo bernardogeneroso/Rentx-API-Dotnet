@@ -1,8 +1,10 @@
+using System.Text;
 using API.DTOs;
 using API.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Services.Interfaces;
@@ -40,6 +42,8 @@ public class AccountController : ControllerBase
 
         if (user == null) return Unauthorized("Invalid email or password");
 
+        if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
+
         var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
         if (!result.Succeeded) return Unauthorized("Invalid email or password");
@@ -76,7 +80,70 @@ public class AccountController : ControllerBase
 
         if (!result.Succeeded) return BadRequest("Problem registering user");
 
+        var origin = Request.Headers["Origin"];
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+
+        var button = new MailButton
+        {
+            Text = "Verify Email",
+            Link = verifyUrl
+        };
+
+        var body = $"Please verify your email by clicking on the button below.";
+
+        await _mailAccesor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
+
         return Ok("User registered");
+    }
+
+    [AllowAnonymous]
+    [HttpPost("verifyEmail")]
+    public async Task<IActionResult> VerifyEmail(string token, string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null) return Unauthorized();
+
+        var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
+        var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+        var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+        if (!result.Succeeded) return BadRequest("Could not verify email address");
+
+        return Ok("Email verified - you can now login");
+    }
+
+    [AllowAnonymous]
+    [HttpGet("resendEmailConfirmationLink")]
+    public async Task<IActionResult> ResendEmailConfirmationLink(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null) return Unauthorized();
+
+        if (user.EmailConfirmed) return Unauthorized("You are already authorized");
+
+        var origin = Request.Headers["Origin"];
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+
+        var button = new MailButton
+        {
+            Text = "Verify Email",
+            Link = verifyUrl
+        };
+
+        var body = $"Please verify your email by clicking on the button below.";
+
+        await _mailAccesor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
+
+        return Ok("Email verification link resent");
     }
 
     [HttpPost("image")]
