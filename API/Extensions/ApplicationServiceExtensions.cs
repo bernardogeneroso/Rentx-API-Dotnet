@@ -1,9 +1,14 @@
+using System.Net;
+using System.Net.Mail;
 using Database;
+using FluentEmail.MailKitSmtp;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Providers.API;
 using Providers.Image;
+using Providers.Mail;
 using Providers.Security;
 using Services.Cars;
 using Services.Core;
@@ -66,12 +71,22 @@ public static class ApplicationServiceExtensions
                     .WithOrigins("http://localhost:3000");
             });
         });
+        services
+            .AddFluentEmail(config["Mail:Email"])
+            .AddRazorRenderer()
+            .AddSmtpSender(
+                config["Mail:Host"],
+                int.Parse(config["Mail:Port"]),
+                config["Mail:User"],
+                config["Mail:Password"]
+            );
 
         services.AddMediatR(typeof(List.Handler).Assembly);
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IImageAccessor, ImageAccessor>();
         services.AddScoped<IOriginAccessor, OriginAccessor>();
+        services.AddScoped<IMailAccessor, MailAccessor>();
         services.AddSignalR();
 
         return services;

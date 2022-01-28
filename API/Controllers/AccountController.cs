@@ -19,9 +19,11 @@ public class AccountController : ControllerBase
     private readonly IUserAccessor _userAccessor;
     private readonly IImageAccessor _imageAccessor;
     private readonly IOriginAccessor _originAccessor;
+    private readonly IMailAccessor _mailAccesor;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor, IOriginAccessor originAccessor)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor, IOriginAccessor originAccessor, IMailAccessor mailAccesor)
     {
+        _mailAccesor = mailAccesor;
         _originAccessor = originAccessor;
         _imageAccessor = imageAccessor;
         _userAccessor = userAccessor;

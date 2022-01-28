@@ -16296,6 +16296,12 @@
     "CSharpLanguageVersion": 1000
   },
   "RootNamespace": "API",
-  "Documents": [],
+  "Documents": [
+    {
+      "FilePath": "/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/Mail/test.cshtml",
+      "TargetPath": "Mail\\test.cshtml",
+      "FileKind": "mvc"
+    }
+  ],
   "SerializationFormat": "0.2"
 }

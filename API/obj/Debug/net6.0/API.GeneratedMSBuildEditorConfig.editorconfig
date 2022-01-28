@@ -14,3 +14,7 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API
 build_property._RazorSourceGeneratorDebug = 
+
+[/Users/bernardogeneroso/Documents/Documents - Bernardo’s MacBook Pro/GitHub/Rentx-API-Dotnet/API/Templates/test.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VGVtcGxhdGVzL3Rlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
