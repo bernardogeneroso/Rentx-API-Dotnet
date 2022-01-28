@@ -12,7 +12,7 @@
 
 > This project already exist, but this time has been created with Web Api ASP.Net Core using language of programming C#
 
-> Link for the older project [RentX](https://github.com/bernardogeneroso/RentX-Rocketseat);
+> Link for the other project [RentX](https://github.com/bernardogeneroso/RentX-Rocketseat);
 
 > Content created by [Rocketseat](https://github.com/Rocketseat);
 
