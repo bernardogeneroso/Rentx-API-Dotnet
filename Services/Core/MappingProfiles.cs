@@ -18,32 +18,26 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Images.Select(x => new CarImageDto
             {
                 ImageName = x.ImageName,
-                Url = $"{currentOrigin}/{x.ImageName}",
+                Url = $"{currentOrigin}/images/{x.ImageName}",
                 IsMain = x.IsMain
             }).FirstOrDefault(x => x.IsMain)));
         CreateMap<Car, CarScheduledDto>()
             .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Images.Select(x => new CarImageDto
             {
                 ImageName = x.ImageName,
-                Url = $"{currentOrigin}/{x.ImageName}",
+                Url = $"{currentOrigin}/images/{x.ImageName}",
                 IsMain = x.IsMain
             }).FirstOrDefault(x => x.IsMain)))
             .ForMember(dest => dest.Appointment, opt =>
                     opt.MapFrom(src => src.Appointments.FirstOrDefault(x => x.Car.Plate == src.Plate)));
-        CreateMap<Car, FavoriteCarDto>()
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Images.Select(x => new CarImageDto
-                {
-                    ImageName = x.ImageName,
-                    Url = $"{currentOrigin}/{x.ImageName}",
-                    IsMain = x.IsMain
-                }).FirstOrDefault(x => x.IsMain)));
+        CreateMap<CarDto, FavoriteCarDto>();
 
         CreateMap<CarDetail, CarDetail>();
         CreateMap<CarDetail, CarDetailDto>()
             .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Car.Images.Select(x => new CarImageDto
             {
                 ImageName = x.ImageName,
-                Url = $"{currentOrigin}/{x.ImageName}",
+                Url = $"{currentOrigin}/images/{x.ImageName}",
                 IsMain = x.IsMain
             }).OrderByDescending(x => x.IsMain)));
 

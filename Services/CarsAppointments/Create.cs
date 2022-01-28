@@ -50,13 +50,19 @@ public class Create
             var startDate = request.CarAppointment.StartDate.Date;
             var endDate = request.CarAppointment.EndDate.Date;
 
+            var userHasMoreCarAppointments = await _context.CarsAppointments.AnyAsync(x => x.UserId == user.Id
+                    && ((x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
+                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)));
+
+            if (userHasMoreCarAppointments) return Result<Unit>.Failure("The user only can have one car appointment per date");
+
             var existCarAppointmentsBetweenDates = await _context.CarsAppointments
                 .AnyAsync(x => x.Plate == car.Plate && ((x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
                     || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)));
 
             if (existCarAppointmentsBetweenDates) return Result<Unit>.Failure("This car is already reserved for this period");
 
-            var days = (endDate - startDate).Days;
+            var days = (endDate - startDate).Days + 1;
 
             var appointment = new CarAppointment
             {

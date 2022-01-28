@@ -164,7 +164,7 @@ public class Seed
                     {
                         Id = Guid.NewGuid(),
                         Car = cars[0],
-                        User = users[2],
+                        User = users[0],
                         StartDate = DateTime.Now.AddDays(6).Date,
                         EndDate = DateTime.Now.AddDays(8).Date,
                         RentalPrice = cars[0].PricePerDay * 2
@@ -200,7 +200,7 @@ public class Seed
                     {
                         Id = Guid.NewGuid(),
                         Car = cars[4],
-                        User = users[2],
+                        User = users[1],
                         StartDate = DateTime.Now.AddDays(4).Date,
                         EndDate = DateTime.Now.AddDays(6).Date,
                         RentalPrice = cars[4].PricePerDay * 2
@@ -209,7 +209,7 @@ public class Seed
                     {
                         Id = Guid.NewGuid(),
                         Car = cars[4],
-                        User = users[2],
+                        User = users[0],
                         StartDate = DateTime.Now.AddDays(1).Date,
                         EndDate = DateTime.Now.AddDays(4).Date,
                         RentalPrice = cars[4].PricePerDay * 4
@@ -218,7 +218,7 @@ public class Seed
                     {
                         Id = Guid.NewGuid(),
                         Car = cars[3],
-                        User = users[2],
+                        User = users[1],
                         StartDate = DateTime.Now.AddDays(10).Date,
                         EndDate = DateTime.Now.AddDays(12).Date,
                         RentalPrice = cars[3].PricePerDay * 2

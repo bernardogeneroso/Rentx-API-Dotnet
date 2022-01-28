@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Cars;
-using Services.CarsDetails;
 
 namespace API.Controllers;
 

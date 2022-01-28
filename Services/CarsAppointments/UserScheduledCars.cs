@@ -20,8 +20,10 @@ public class UserScheduledCars
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IUserAccessor _userAccessor;
-        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+        private readonly IOriginAccessor _originAccessor;
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, IOriginAccessor originAccessor)
         {
+            _originAccessor = originAccessor;
             _userAccessor = userAccessor;
             _mapper = mapper;
             _context = context;
@@ -43,8 +45,10 @@ public class UserScheduledCars
                                 .Where(x => x.appointment.UserId == user.Id)
                                 .Select(x => x.car)
                                 .OrderByDescending(x => x.Appointments.Any(x => x.StartDate > DateTime.Now))
-                                .ProjectTo<CarScheduledDto>(_mapper.ConfigurationProvider)
+                                .ProjectTo<CarScheduledDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                                 .ToListAsync();
+
+            if (carsScheduled.Count() == 0) return Result<List<CarScheduledDto>>.Failure("You need to schedule at least one car");
 
             return Result<List<CarScheduledDto>>.Success(carsScheduled);
         }

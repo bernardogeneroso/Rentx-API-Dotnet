@@ -19,7 +19,7 @@ public class Delete
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Plate).Length(6).NotNull();
+            RuleFor(x => x.Plate).Length(6).NotEmpty();
             RuleFor(x => x.ImageName).NotEmpty();
         }
     }

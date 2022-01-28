@@ -1,8 +1,10 @@
 using Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Services.Cars;
 using Services.Interfaces;
 
 namespace Services.CarsAppointments;
@@ -18,8 +20,10 @@ public class FavoriteCar
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
         private readonly IMapper _mapper;
-        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+        private readonly IOriginAccessor _originAccessor;
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, IOriginAccessor originAccessor)
         {
+            _originAccessor = originAccessor;
             _mapper = mapper;
             _userAccessor = userAccessor;
             _context = context;
@@ -31,26 +35,30 @@ public class FavoriteCar
 
             if (user == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
 
-            var favoriteCar = await _context.CarsAppointments.OrderByDescending(x => x.Plate).GroupBy(x => x.Plate).Select(x => new
+            var allPossibleFavoriteCars = await _context.CarsAppointments.Where(x => x.UserId == user.Id)
+            .GroupBy(x => x.Plate)
+            .Select(x => new
             {
+                Appointment = x.ToList(),
                 Plate = x.Key,
                 Count = x.Count()
-            }).FirstOrDefaultAsync();
+            }).OrderByDescending(x => x.Count).ToListAsync();
 
-            if (favoriteCar == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
+            if (allPossibleFavoriteCars.Count() == 0) return Result<FavoriteCarDto>.Failure("You needed to schedule at least one car");
 
-            var sumOfFavoriteCarRentalDays = _context.CarsAppointments.Where(x => x.Plate == favoriteCar.Plate).Select(x => new
+            var favoriteCarRentalDays = allPossibleFavoriteCars.Select(x => new
             {
-                Days = x.EndDate.Subtract(x.StartDate).Days
-            }).ToListAsync().Result.Sum(x => x.Days);
+                x.Plate,
+                Days = x.Appointment.Sum(y => (y.EndDate - y.StartDate).Days + 1)
+            }).OrderByDescending(x => x.Days).ToList().FirstOrDefault();
 
-            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Plate == favoriteCar.Plate);
+            var car = await _context.Cars.ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() }).FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate);
 
             if (car == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
 
             var favoriteCarDto = new FavoriteCarDto
             {
-                TotalRentalDays = sumOfFavoriteCarRentalDays
+                TotalRentalDays = favoriteCarRentalDays.Days,
             };
 
             _mapper.Map(car, favoriteCarDto);

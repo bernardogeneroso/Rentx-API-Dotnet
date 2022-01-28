@@ -1,5 +1,6 @@
 using Application.Core;
 using Database;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,15 @@ public class SetMain
         public Handler(DataContext context)
         {
             _context = context;
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Plate).Length(6).NotEmpty();
+                RuleFor(x => x.ImageName).NotEmpty();
+            }
         }
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)

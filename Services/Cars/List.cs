@@ -30,8 +30,8 @@ public class List
         public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var query = _context.Cars
-                                    .Include(c => c.Images)
                                     .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                                    .OrderByDescending(x => x.CreatedAt)
                                     .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Search))

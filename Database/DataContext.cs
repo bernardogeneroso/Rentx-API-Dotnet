@@ -42,14 +42,14 @@ public class DataContext : IdentityDbContext<AppUser>
             .HasOne(ci => ci.Car)
             .WithMany(c => c.Images)
             .HasForeignKey(ci => ci.Plate)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<CarDetail>().ToTable("CarsDetails").HasKey(cd => cd.Plate);
         builder.Entity<CarDetail>()
             .HasOne(cd => cd.Car)
             .WithOne(c => c.Detail)
             .HasForeignKey<CarDetail>(cd => cd.Plate)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<CarAppointment>().ToTable("CarsAppointments").HasKey(ca => ca.Id);
         builder.Entity<CarAppointment>()
