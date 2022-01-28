@@ -16,7 +16,7 @@
 
 > Content created by [Rocketseat](https://github.com/Rocketseat);
 
-### Start project
+## Start project
 
 Setup appsettings.Development.json or appsettings.Development.json
 
