@@ -17,6 +17,12 @@ public class CarAppointmentController : BaseApiController
         return HandleResult(await Mediator.Send(new Services.CarsAppointments.Create.Command { CarAppointment = carAppointment }));
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAppointment(Guid id)
+    {
+        return HandleResult(await Mediator.Send(new Services.CarsAppointments.Delete.Command { Id = id }));
+    }
+
     [HttpGet("scheduled")]
     public async Task<IActionResult> GetUserScheduledCars()
     {
