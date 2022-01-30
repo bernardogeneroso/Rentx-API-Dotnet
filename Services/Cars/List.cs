@@ -32,6 +32,7 @@ public class List
             var query = _context.Cars
                                     .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                                     .OrderByDescending(x => x.CreatedAt)
+                                    .AsNoTracking()
                                     .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Search))

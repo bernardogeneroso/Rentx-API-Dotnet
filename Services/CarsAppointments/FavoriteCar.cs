@@ -35,22 +35,30 @@ public class FavoriteCar
 
             if (user == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
 
-            var allPossibleFavoriteCars = await _context.CarsAppointments.Where(x => x.UserId == user.Id)
+            var allPossibleFavoriteCars = await _context.CarsAppointments
+            .AsNoTracking()
+            .Where(x => x.UserId == user.Id)
             .GroupBy(x => x.Plate)
             .Select(x => new
             {
                 Appointment = x.ToList(),
                 Plate = x.Key,
                 Count = x.Count()
-            }).OrderByDescending(x => x.Count).ToListAsync();
+            })
+            .OrderByDescending(x => x.Count)
+            .ToListAsync();
 
             if (allPossibleFavoriteCars.Count() == 0) return Result<FavoriteCarDto>.Failure("You needed to schedule at least one car");
 
-            var favoriteCarRentalDays = allPossibleFavoriteCars.Select(x => new
+            var favoriteCarRentalDays = allPossibleFavoriteCars
+            .Select(x => new
             {
                 x.Plate,
                 Days = x.Appointment.Sum(y => (y.EndDate - y.StartDate).Days + 1)
-            }).OrderByDescending(x => x.Days).ToList().FirstOrDefault();
+            })
+            .OrderByDescending(x => x.Days)
+            .ToList()
+            .FirstOrDefault();
 
             var car = await _context.Cars.ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() }).FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate);
 

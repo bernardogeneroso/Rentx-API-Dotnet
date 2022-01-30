@@ -44,6 +44,7 @@ public class CarsBetweenDates
             var endDate = request.Result.EndDate.Date;
 
             var carsWithAppointmentsBetweenDates = await _context.CarsAppointments
+                            .AsNoTracking()
                             .Where(x => (x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
                                     || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate))
                             .Select(x => x.Plate)
@@ -53,6 +54,7 @@ public class CarsBetweenDates
             if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDto>>.Failure("Faield getting cars between dates");
 
             var cars = await _context.Cars
+                            .AsNoTracking()
                             .Where(x => x.Fuel == request.Result.Fuel
                             && x.Transmission == request.Result.Transmission
                             && x.PricePerDay >= request.Result.StartPricePerDay

@@ -46,7 +46,7 @@ public class CarController : BaseApiController
 
     [Authorize(Policy = "IsAdmin")]
     [HttpPut("details/{plate}")]
-    public async Task<IActionResult> GetCarDetails(string plate, [FromBody] CarDetail carDetail)
+    public async Task<IActionResult> EditCarDetails(string plate, [FromBody] CarDetail carDetail)
     {
         carDetail.Plate = plate;
 

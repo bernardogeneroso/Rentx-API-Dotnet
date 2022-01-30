@@ -37,6 +37,7 @@ public class UserScheduledCars
             var cars = await _context.Cars.ToListAsync();
 
             var carsScheduled = await _context.Cars
+                                .AsNoTracking()
                                 .Join(_context.CarsAppointments,
                                     car => car.Plate,
                                     appointment => appointment.Plate,
