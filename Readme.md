@@ -21,22 +21,79 @@
 Setup appsettings.Development.json or appsettings.json
 
 1. Setting Environment variables -> /API/appsettings.json
-   ```json
-   {
-      ...other code
-      "ConnectionStrings": {
-         "DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=pass; Database=RentX"
-      },
-      "Mail": {
-         "Host": "smtp.gmail.com",
-         "Email": "example@gmail.com",
-         "Port": 587,
-         "User": "example@gmail.com",
-         "Password": "pass"
-      },
-      "TokenKey": "super secret key"
-   }
-   ```
+    ```json
+    {
+       ...other code,
+       "ConnectionStrings": {
+          "DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=pass; Database=RentX"
+       },
+       "Mail": {
+          "Host": "smtp.gmail.com",
+          "Email": "example@gmail.com",
+          "Port": 587,
+          "User": "example@gmail.com",
+          "Password": "pass"
+       },
+       "TokenKey": "super secret key"
+    }
+    ```
+2. API routes
+    1. Users
+        - [GET] user -> /account
+            - [Authorize] -> Bearer token
+        - [GET] resend email confirmation link -> /account/resendEmailConfirmationLink
+            - Params -> email
+        - [POST] login -> /account/login
+            - Body -> email, password
+        - [POST] register -> /account/register
+            - Body -> displayName, username, email, password
+        - [POST] upload avatar -> /account/image
+            - [Authorize] -> Bearer token
+            - Body(form-data) -> File
+        - [POST] verify email -> /account/verifyEmail
+            - Params -> token, email
+        - [POST] refresh token -> /account/refreshToken
+            - [Authorize] -> Bearer token
+            - Headers -> Cookie -> refreshToken=...
+    2. Cars
+         1. Car /car
+            - [GET] cars -> /
+                  - Params -> search[^1]
+            - [POST] create car -> /
+                  - [Authorize] -> Bearer token
+                  - Body -> plate, brand, model, color, year, fuel, transmission, doors, seats, pricePerDay, detail - maxSpeed, topSpeed, acceleration, weight, hp
+            - [PUT] update car -> /{plate}
+                  - [Authorize] -> Bearer token
+                  - Body -> brand, model, color, year, fuel, transmission, doors, seats, pricePerDay
+            - [DELETE] delete car -> /{plate}
+                  - [Authorize] -> Bearer token
+            - [GET] user favorite car -> /favorite
+         2. Car details -> /details
+            - [GET] details -> /{plate}
+            - [PUT] update details -> /{plate}
+                  - [Authorize] -> Bearer token
+                  - Body -> maxSpeed, topSpeed, acceleration, weight, hp
+         3. Car images -> /image
+            - [POST] upload image -> /{plate}
+                  - [Authorize] -> Bearer token
+                  - Body(form-data) -> File
+            - [POST] set main image -> /{plate}/setMain
+                  - [Authorize] -> Bearer token
+                  - Params -> imageName
+            - [DELETE] delete image -> /{plate}
+                  - [Authorize] -> Bearer token
+                  - Params -> imageName
+         4. Car appointments -> /appointments
+            - [POST] create appointment -> /{plate}
+                  - [Authorize] -> Bearer token
+                  - Body -> startDate, endDate
+            - [GET] user scheduled -> /
+            - [GET] between dates -> /between-dates
+                  - Params -> startDate, endDate, startPricePerDay, endPricePerDay, fuel, transmission
+            - [DELETE] delete appointment -> /{plate}
+         
+
+[^1]: This search work with brand and model
 
 # :computer: Authors
 
