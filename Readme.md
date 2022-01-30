@@ -18,16 +18,16 @@
 
 ## Start project
 
-Setup appsettings.Development.json or appsettings.Development.json
+Setup appsettings.Development.json or appsettings.json
 
-1. Setting Environment variables
+1. Setting Environment variables -> /API/appsettings.json
    ```json
    {
       ...other code
       "ConnectionStrings": {
          "DefaultConnection": "Server=localhost; Port=5432; User Id=postgres; Password=pass; Database=RentX"
       },
-         "Mail": {
+      "Mail": {
          "Host": "smtp.gmail.com",
          "Email": "example@gmail.com",
          "Port": 587,
