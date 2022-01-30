@@ -91,9 +91,6 @@ Setup appsettings.Development.json or appsettings.json
             - [GET] between dates -> /between-dates
                   - Params -> startDate, endDate, startPricePerDay, endPricePerDay, fuel, transmission
             - [DELETE] delete appointment -> /{plate}
-         
-
-[^1]: This search work with brand and model
 
 # :computer: Authors
 
@@ -131,3 +128,5 @@ Setup appsettings.Development.json or appsettings.json
 # :closed_book: License
 
 This project is under a license [MIT](./LICENSE).
+
+[^1]: This search work with brand and model

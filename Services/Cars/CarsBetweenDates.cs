@@ -53,6 +53,10 @@ public class CarsBetweenDates
             if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDto>>.Failure("Faield getting cars between dates");
 
             var cars = await _context.Cars
+                            .Where(x => x.Fuel == request.Result.Fuel
+                            && x.Transmission == request.Result.Transmission
+                            && x.PricePerDay >= request.Result.StartPricePerDay
+                            && x.PricePerDay <= request.Result.EndPricePerDay)
                             .Where(x => !carsWithAppointmentsBetweenDates.Contains(x.Plate))
                             .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                             .ToListAsync();

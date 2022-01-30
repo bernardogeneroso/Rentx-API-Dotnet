@@ -74,7 +74,6 @@ public class CarController : BaseApiController
         return HandleResult(await Mediator.Send(new Services.CarsImages.SetMain.Command { Plate = plate, ImageName = imageName }));
     }
 
-    [AllowAnonymous]
     [HttpGet("favorite")]
     public async Task<IActionResult> GetFavoriteCar()
     {
