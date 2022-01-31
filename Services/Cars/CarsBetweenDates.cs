@@ -5,8 +5,6 @@ using Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Models;
 using Services.Interfaces;
 
 namespace Services.Cars;

@@ -1,10 +1,6 @@
-using System.Net;
-using System.Net.Mail;
 using Database;
-using FluentEmail.MailKitSmtp;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Providers.API;
 using Providers.Image;
