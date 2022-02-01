@@ -1,6 +1,6 @@
-namespace Services.CarsImages;
+namespace Services.CarsImages.DTOs;
 
-public class CarImageDto
+public class CarImageDtoQuery
 {
     public string ImageName { get; set; }
     public string Url { get; set; }

@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Services.Cars.DTOs;
 using Services.SignalR.Hubs;
 using Services.SignalR.Interfaces;
 
@@ -15,7 +16,7 @@ public class Create
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public Car Car { get; set; }
+        public CarDtoRequest Car { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -44,7 +45,9 @@ public class Create
 
             if (carExist) return Result<Unit>.Failure("Car already exists");
 
-            _context.Cars.Add(request.Car);
+            var newCar = _mapper.Map<Car>(request.Car);
+
+            _context.Cars.Add(newCar);
 
             var result = await _context.SaveChangesAsync() > 0;
 

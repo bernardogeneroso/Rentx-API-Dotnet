@@ -1,8 +1,8 @@
-using Services.CarsImages;
+using Services.CarsImages.DTOs;
 
-namespace Services.CarsDetails;
+namespace Services.CarsDetails.DTOs;
 
-public class CarDetailDto
+public class CarDetailDtoQuery
 {
     public string Plate { get; set; }
     public int maxSpeed { get; set; }
@@ -10,5 +10,5 @@ public class CarDetailDto
     public float acceleration { get; set; }
     public int weight { get; set; }
     public int hp { get; set; }
-    public CarImageDto[] Images { get; set; }
+    public CarImageDtoQuery[] Images { get; set; }
 }

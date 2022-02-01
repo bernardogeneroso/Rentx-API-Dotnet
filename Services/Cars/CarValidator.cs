@@ -1,10 +1,10 @@
 using FluentValidation;
-using Models;
+using Services.Cars.DTOs;
 using Services.CarsDetails;
 
 namespace Services.Cars;
 
-public class CarValidator : AbstractValidator<Car>
+public class CarValidator : AbstractValidator<CarDtoRequest>
 {
     public CarValidator()
     {
@@ -17,7 +17,7 @@ public class CarValidator : AbstractValidator<Car>
         RuleFor(x => x.Doors).NotEmpty();
         RuleFor(x => x.Seats).NotEmpty();
         RuleFor(x => x.PricePerDay).NotEmpty();
-        RuleFor(x => x.Detail).SetValidator(new CarDetailValidator());
+        RuleFor(x => x.Detail).SetValidator(new CarDetailValidator()).NotEmpty();
     }
 
     private bool BeValidFuel(string fuel)

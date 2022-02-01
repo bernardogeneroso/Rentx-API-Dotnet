@@ -1,8 +1,8 @@
-using Services.CarsImages;
+using Services.CarsImages.DTOs;
 
-namespace Services.Cars;
+namespace Services.Cars.DTOs;
 
-public class CarDto
+public class CarDtoQuery
 {
     public string Plate { get; set; }
     public string Brand { get; set; }
@@ -14,7 +14,7 @@ public class CarDto
     public string Doors { get; set; }
     public string Seats { get; set; }
     public float PricePerDay { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public CarImageDto Image { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public CarImageDtoQuery Image { get; set; }
 }

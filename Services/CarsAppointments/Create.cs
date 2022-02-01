@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Services.CarsAppointments.DTOs;
 using Services.Interfaces;
 
 namespace Services.CarsAppointments;
@@ -13,13 +14,15 @@ public class Create
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public CarAppointment CarAppointment { get; set; }
+        public string Plate { get; set; }
+        public CarAppointmentDtoRequest CarAppointment { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
+            RuleFor(x => x.Plate).Length(6).NotEmpty();
             RuleFor(x => x.CarAppointment).SetValidator(new CarAppointmentValidator());
         }
     }
@@ -43,7 +46,7 @@ public class Create
 
             if (user == null) return Result<Unit>.Failure("Faield creating car appointment");
 
-            var car = await _context.Cars.FindAsync(request.CarAppointment.Plate);
+            var car = await _context.Cars.FindAsync(request.Plate);
 
             if (car == null) return Result<Unit>.Failure("Faield creating car appointment");
 

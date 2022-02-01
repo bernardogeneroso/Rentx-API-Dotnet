@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using Services.Cars;
+using Services.Cars.DTOs;
+using Services.CarsDetails.DTOs;
 
 namespace API.Controllers;
 
@@ -16,14 +17,14 @@ public class CarController : BaseApiController
 
     [Authorize(Policy = "IsAdmin")]
     [HttpPost]
-    public async Task<IActionResult> CreateCar([FromBody] Car car)
+    public async Task<IActionResult> CreateCar([FromBody] CarDtoRequest car)
     {
         return HandleResult(await Mediator.Send(new Create.Command { Car = car }));
     }
 
     [Authorize(Policy = "IsAdmin")]
     [HttpPut("{plate}")]
-    public async Task<IActionResult> EditCar(string plate, [FromBody] Car car)
+    public async Task<IActionResult> EditCar(string plate, [FromBody] CarDtoRequest car)
     {
         car.Plate = plate;
 
@@ -42,15 +43,6 @@ public class CarController : BaseApiController
     public async Task<IActionResult> GetCarDetails(string plate)
     {
         return HandleResult(await Mediator.Send(new Services.CarsDetails.Details.Query { Plate = plate }));
-    }
-
-    [Authorize(Policy = "IsAdmin")]
-    [HttpPut("details/{plate}")]
-    public async Task<IActionResult> EditCarDetails(string plate, [FromBody] CarDetail carDetail)
-    {
-        carDetail.Plate = plate;
-
-        return HandleResult(await Mediator.Send(new Services.CarsDetails.Edit.Command { CarDetail = carDetail }));
     }
 
     [Authorize(Policy = "IsAdmin")]

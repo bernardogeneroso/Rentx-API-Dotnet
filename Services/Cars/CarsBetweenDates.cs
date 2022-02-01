@@ -5,15 +5,16 @@ using Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Services.Cars.DTOs;
 using Services.Interfaces;
 
 namespace Services.Cars;
 
 public class CarsBetweenDates
 {
-    public class Query : IRequest<Result<List<CarDto>>>
+    public class Query : IRequest<Result<List<CarDtoQuery>>>
     {
-        public CarsBetweenDatesResult Result { get; set; }
+        public CarsBetweenDatesDtoRequest Result { get; set; }
     }
 
     public class QueryValidator : AbstractValidator<Query>
@@ -24,7 +25,7 @@ public class CarsBetweenDates
         }
     }
 
-    public class Handler : IRequestHandler<Query, Result<List<CarDto>>>
+    public class Handler : IRequestHandler<Query, Result<List<CarDtoQuery>>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -36,7 +37,7 @@ public class CarsBetweenDates
             _context = context;
         }
 
-        public async Task<Result<List<CarDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<CarDtoQuery>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var startDate = request.Result.StartDate.Date;
             var endDate = request.Result.EndDate.Date;
@@ -49,7 +50,7 @@ public class CarsBetweenDates
                             .Distinct()
                             .ToListAsync();
 
-            if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDto>>.Failure("Faield getting cars between dates");
+            if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDtoQuery>>.Failure("Faield getting cars between dates");
 
             var cars = await _context.Cars
                             .AsNoTracking()
@@ -58,10 +59,10 @@ public class CarsBetweenDates
                             && x.PricePerDay >= request.Result.StartPricePerDay
                             && x.PricePerDay <= request.Result.EndPricePerDay)
                             .Where(x => !carsWithAppointmentsBetweenDates.Contains(x.Plate))
-                            .ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                            .ProjectTo<CarDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                             .ToListAsync();
 
-            return Result<List<CarDto>>.Success(cars);
+            return Result<List<CarDtoQuery>>.Success(cars);
         }
     }
 }

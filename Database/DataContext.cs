@@ -18,9 +18,6 @@ public class DataContext : IdentityDbContext<AppUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
 
         foreach (var property in builder.Model.GetEntityTypes()
                  .SelectMany(t => t.GetProperties())
@@ -41,7 +38,6 @@ public class DataContext : IdentityDbContext<AppUser>
 
         builder.Entity<Car>(c => c.HasKey("Plate"));
 
-
         builder.Entity<CarImage>(c => c.HasKey(ci => new { ci.Plate, ci.ImageName }));
         builder.Entity<CarImage>()
             .HasOne(ci => ci.Car)
@@ -49,14 +45,18 @@ public class DataContext : IdentityDbContext<AppUser>
             .HasForeignKey(ci => ci.Plate)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<CarDetail>().ToTable("CarsDetails").HasKey(cd => cd.Plate);
+        builder.Entity<CarDetail>()
+            .ToTable("CarsDetails")
+            .HasKey(cd => cd.Plate);
         builder.Entity<CarDetail>()
             .HasOne(cd => cd.Car)
             .WithOne(c => c.Detail)
             .HasForeignKey<CarDetail>(cd => cd.Plate)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Entity<CarAppointment>().ToTable("CarsAppointments").HasKey(ca => ca.Id);
+        builder.Entity<CarAppointment>()
+            .ToTable("CarsAppointments")
+            .HasKey(ca => ca.Id);
         builder.Entity<CarAppointment>()
             .HasOne(ca => ca.Car)
             .WithMany(c => c.Appointments)
@@ -67,6 +67,34 @@ public class DataContext : IdentityDbContext<AppUser>
             .WithMany(u => u.Appointments)
             .HasForeignKey(ca => ca.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+    }
 
+    public override int SaveChanges()
+    {
+        AddTimestamps();
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        AddTimestamps();
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void AddTimestamps()
+    {
+        var entities = ChangeTracker.Entries()
+            .Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+        foreach (var entity in entities)
+        {
+            var now = DateTime.UtcNow; // current datetime
+
+            if (entity.State == EntityState.Added)
+            {
+                ((BaseEntity)entity.Entity).CreatedAt = now;
+            }
+            ((BaseEntity)entity.Entity).UpdatedAt = now;
+        }
     }
 }

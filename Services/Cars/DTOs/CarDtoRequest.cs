@@ -1,6 +1,8 @@
-namespace Models;
+using Services.CarsDetails.DTOs;
 
-public class Car : BaseEntity
+namespace Services.Cars.DTOs;
+
+public class CarDtoRequest
 {
     public string Plate { get; set; }
     public string Brand { get; set; }
@@ -12,7 +14,5 @@ public class Car : BaseEntity
     public string Doors { get; set; }
     public string Seats { get; set; }
     public float PricePerDay { get; set; }
-    public ICollection<CarImage> Images { get; set; } = new List<CarImage>();
-    public ICollection<CarAppointment> Appointments { get; set; } = new List<CarAppointment>();
-    public CarDetail Detail { get; set; }
+    public CarDetailDtoRequest Detail { get; set; }
 }

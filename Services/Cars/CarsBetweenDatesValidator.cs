@@ -1,8 +1,9 @@
 using FluentValidation;
+using Services.Cars.DTOs;
 
 namespace Services.Cars;
 
-public class CarsBetweenDatesValidator : AbstractValidator<CarsBetweenDatesResult>
+public class CarsBetweenDatesValidator : AbstractValidator<CarsBetweenDatesDtoRequest>
 {
     public CarsBetweenDatesValidator()
     {

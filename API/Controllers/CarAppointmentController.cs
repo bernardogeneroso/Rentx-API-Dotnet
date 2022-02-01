@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
-using Services.Cars;
+using Services.Cars.DTOs;
+using Services.CarsAppointments.DTOs;
 
 namespace API.Controllers;
 
@@ -10,11 +10,9 @@ namespace API.Controllers;
 public class CarAppointmentController : BaseApiController
 {
     [HttpPost("{plate}")]
-    public async Task<IActionResult> CreateAppointment(string plate, [FromBody] CarAppointment carAppointment)
+    public async Task<IActionResult> CreateAppointment(string plate, [FromBody] CarAppointmentDtoRequest carAppointment)
     {
-        carAppointment.Plate = plate;
-
-        return HandleResult(await Mediator.Send(new Services.CarsAppointments.Create.Command { CarAppointment = carAppointment }));
+        return HandleResult(await Mediator.Send(new Services.CarsAppointments.Create.Command { Plate = plate, CarAppointment = carAppointment }));
     }
 
     [HttpDelete("{id}")]
@@ -31,7 +29,7 @@ public class CarAppointmentController : BaseApiController
 
     [AllowAnonymous]
     [HttpGet("between-dates")]
-    public async Task<IActionResult> GetCarsBetweenDates([FromQuery] CarsBetweenDatesResult carsBetweenDates)
+    public async Task<IActionResult> GetCarsBetweenDates([FromQuery] CarsBetweenDatesDtoRequest carsBetweenDates)
     {
         return HandleResult(await Mediator.Send(new Services.Cars.CarsBetweenDates.Query { Result = carsBetweenDates }));
     }

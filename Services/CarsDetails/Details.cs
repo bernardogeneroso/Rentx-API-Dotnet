@@ -5,13 +5,14 @@ using Database;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Services.CarsDetails.DTOs;
 using Services.Interfaces;
 
 namespace Services.CarsDetails;
 
 public class Details
 {
-    public class Query : IRequest<Result<CarDetailDto>>
+    public class Query : IRequest<Result<CarDetailDtoQuery>>
     {
         public string Plate { get; set; }
     }
@@ -24,7 +25,7 @@ public class Details
         }
     }
 
-    public class Handler : IRequestHandler<Query, Result<CarDetailDto>>
+    public class Handler : IRequestHandler<Query, Result<CarDetailDtoQuery>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -36,17 +37,15 @@ public class Details
             _context = context;
         }
 
-        public async Task<Result<CarDetailDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<CarDetailDtoQuery>> Handle(Query request, CancellationToken cancellationToken)
         {
             var carDetail = await _context.CarsDetails
                     .Include(x => x.Car.Images)
                     .Where(x => x.Car.Plate == request.Plate)
-                    .ProjectTo<CarDetailDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                    .ProjectTo<CarDetailDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
                     .SingleOrDefaultAsync(x => x.Plate == request.Plate);
 
-            if (carDetail == null) return Result<CarDetailDto>.Failure("Failed to get the car details");
-
-            return Result<CarDetailDto>.Success(carDetail);
+            return Result<CarDetailDtoQuery>.Success(carDetail);
         }
     }
 }

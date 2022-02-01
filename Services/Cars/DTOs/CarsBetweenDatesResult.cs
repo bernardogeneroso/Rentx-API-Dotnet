@@ -1,6 +1,6 @@
-namespace Services.Cars;
+namespace Services.Cars.DTOs;
 
-public class CarsBetweenDatesResult
+public class CarsBetweenDatesDtoRequest
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

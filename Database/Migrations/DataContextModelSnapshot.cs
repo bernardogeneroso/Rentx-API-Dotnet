@@ -314,12 +314,6 @@ namespace Database.Migrations
                     b.Property<string>("Plate")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<float>("acceleration")
                         .HasColumnType("real");
 
@@ -348,8 +342,14 @@ namespace Database.Migrations
                     b.Property<string>("ImageName")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<bool>("IsMain")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Plate", "ImageName");
 

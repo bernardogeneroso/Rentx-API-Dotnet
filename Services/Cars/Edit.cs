@@ -3,7 +3,8 @@ using AutoMapper;
 using Database;
 using FluentValidation;
 using MediatR;
-using Models;
+using Microsoft.EntityFrameworkCore;
+using Services.Cars.DTOs;
 
 namespace Services.Cars;
 
@@ -11,7 +12,7 @@ public class Edit
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public Car Car { get; set; }
+        public CarDtoRequest Car { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -34,11 +35,11 @@ public class Edit
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var car = await _context.Cars.FindAsync(request.Car.Plate);
+            var car = await _context.Cars
+                    .Include(x => x.Detail)
+                    .FirstOrDefaultAsync(x => x.Plate == request.Car.Plate);
 
             if (car == null) return null;
-
-            request.Car.UpdatedAt = DateTime.UtcNow;
 
             _mapper.Map(request.Car, car);
 

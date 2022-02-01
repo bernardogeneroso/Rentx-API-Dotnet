@@ -1,9 +1,9 @@
 using FluentValidation;
-using Models;
+using Services.CarsDetails.DTOs;
 
 namespace Services.CarsDetails;
 
-public class CarDetailValidator : AbstractValidator<CarDetail>
+public class CarDetailValidator : AbstractValidator<CarDetailDtoRequest>
 {
     public CarDetailValidator()
     {

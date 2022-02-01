@@ -4,18 +4,19 @@ using AutoMapper.QueryableExtensions;
 using Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Services.Cars;
+using Services.Cars.DTOs;
+using Services.CarsAppointments.DTOs;
 using Services.Interfaces;
 
 namespace Services.CarsAppointments;
 
 public class FavoriteCar
 {
-    public class Query : IRequest<Result<FavoriteCarDto>>
+    public class Query : IRequest<Result<FavoriteCarDtoQuery>>
     {
     }
 
-    public class Handler : IRequestHandler<Query, Result<FavoriteCarDto>>
+    public class Handler : IRequestHandler<Query, Result<FavoriteCarDtoQuery>>
     {
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
@@ -29,11 +30,11 @@ public class FavoriteCar
             _context = context;
         }
 
-        public async Task<Result<FavoriteCarDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<FavoriteCarDtoQuery>> Handle(Query request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
 
-            if (user == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
+            if (user == null) return Result<FavoriteCarDtoQuery>.Failure("Faield to get your favorite car");
 
             var allPossibleFavoriteCars = await _context.CarsAppointments
             .AsNoTracking()
@@ -48,7 +49,7 @@ public class FavoriteCar
             .OrderByDescending(x => x.Count)
             .ToListAsync();
 
-            if (allPossibleFavoriteCars.Count() == 0) return Result<FavoriteCarDto>.Failure("You needed to schedule at least one car");
+            if (allPossibleFavoriteCars.Count() == 0) return Result<FavoriteCarDtoQuery>.Failure("You needed to schedule at least one car");
 
             var favoriteCarRentalDays = allPossibleFavoriteCars
             .Select(x => new
@@ -60,18 +61,18 @@ public class FavoriteCar
             .ToList()
             .FirstOrDefault();
 
-            var car = await _context.Cars.ProjectTo<CarDto>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() }).FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate);
+            var car = await _context.Cars.ProjectTo<CarDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() }).FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate);
 
-            if (car == null) return Result<FavoriteCarDto>.Failure("Faield to get your favorite car");
+            if (car == null) return Result<FavoriteCarDtoQuery>.Failure("Faield to get your favorite car");
 
-            var favoriteCarDto = new FavoriteCarDto
+            var favoriteCarDtoQuery = new FavoriteCarDtoQuery
             {
                 TotalRentalDays = favoriteCarRentalDays.Days,
             };
 
-            _mapper.Map(car, favoriteCarDto);
+            _mapper.Map(car, favoriteCarDtoQuery);
 
-            return Result<FavoriteCarDto>.Success(favoriteCarDto);
+            return Result<FavoriteCarDtoQuery>.Success(favoriteCarDtoQuery);
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace Models;
 
-public class CarImage
+public class CarImage : BaseEntity
 {
     public string Plate { get; set; }
     public string ImageName { get; set; }

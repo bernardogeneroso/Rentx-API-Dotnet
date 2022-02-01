@@ -230,7 +230,7 @@ public class AccountController : ControllerBase
             DisplayName = user.DisplayName,
             Username = user.UserName,
             Token = _tokenService.CreateToken(user),
-            Avatar = pathImage != null ? new Avatar
+            Avatar = pathImage != null ? new AvatarDto
             {
                 AvatarName = user.AvatarName,
                 Url = pathImage,
