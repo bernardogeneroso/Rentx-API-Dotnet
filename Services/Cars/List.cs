@@ -38,7 +38,7 @@ public class List
 
             if (!string.IsNullOrWhiteSpace(request.Search))
             {
-                query = query.Where(c => c.Brand.ToLower().Contains(request.Search.ToLower()) || c.Model.ToLower().Contains(request.Search.ToLower()));
+                query = query.Where(x => x.Brand.Contains(request.Search, StringComparison.OrdinalIgnoreCase) || x.Model.Contains(request.Search, StringComparison.OrdinalIgnoreCase));
             }
 
             return Result<List<CarDtoQuery>>.Success(await query.ToListAsync());
