@@ -61,36 +61,42 @@ Setup appsettings.Development.json or appsettings.json
                   - Params -> search[^1]
             - [POST] create car -> /
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
                   - Body -> plate, brand, model, color, year, fuel, transmission, doors, seats, pricePerDay, detail - maxSpeed, topSpeed, acceleration, weight, hp
             - [PUT] update car -> /{plate}
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
                   - Body -> brand, model, color, year, fuel, transmission, doors, seats, pricePerDay
             - [DELETE] delete car -> /{plate}
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
             - [GET] user favorite car -> /favorite
+                  - [Authorize] -> Bearer token
          2. Car details -> /details
             - [GET] details -> /{plate}
-            - [PUT] update details -> /{plate}
-                  - [Authorize] -> Bearer token
-                  - Body -> maxSpeed, topSpeed, acceleration, weight, hp
          3. Car images -> /image
             - [POST] upload image -> /{plate}
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
                   - Body(form-data) -> File
             - [POST] set main image -> /{plate}/setMain
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
                   - Params -> imageName
             - [DELETE] delete image -> /{plate}
                   - [Authorize] -> Bearer token
+                  - [Admin] -> User with permissions of admin
                   - Params -> imageName
          4. Car appointments -> /appointments
             - [POST] create appointment -> /{plate}
                   - [Authorize] -> Bearer token
                   - Body -> startDate, endDate
-            - [GET] user scheduled -> /
+            - [GET] user scheduled -> /scheduled
+                  - [Authorize] -> Bearer token
             - [GET] between dates -> /between-dates
                   - Params -> startDate, endDate, startPricePerDay, endPricePerDay, fuel, transmission
             - [DELETE] delete appointment -> /{plate}
+                  - [Authorize] -> Bearer token
 
 # :computer: Authors
 
