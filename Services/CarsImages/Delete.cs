@@ -37,7 +37,7 @@ public class Delete
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var image = await _context.CarsImages.FindAsync(request.Plate, request.ImageName);
+            var image = await _context.CarsImages.FindAsync(new object[] { request.Plate, request.ImageName }, cancellationToken);
 
             if (image == null) return Result<Unit>.Failure("Failed to delete the image");
 
@@ -47,7 +47,7 @@ public class Delete
 
             if (image.IsMain)
             {
-                var firstImage = await _context.CarsImages.FirstOrDefaultAsync(x => x.Plate == image.Plate);
+                var firstImage = await _context.CarsImages.FirstOrDefaultAsync(x => x.Plate == image.Plate, cancellationToken);
 
                 if (firstImage != null)
                 {

@@ -43,7 +43,7 @@ public class Details
                     .Include(x => x.Car.Images)
                     .Where(x => x.Car.Plate == request.Plate)
                     .ProjectTo<CarDetailDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
-                    .SingleOrDefaultAsync(x => x.Plate == request.Plate);
+                    .SingleOrDefaultAsync(x => x.Plate == request.Plate, cancellationToken);
 
             return Result<CarDetailDtoQuery>.Success(carDetail);
         }

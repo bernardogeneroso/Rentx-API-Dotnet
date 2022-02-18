@@ -20,12 +20,10 @@ public class UploadCarImage
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
         private readonly IImageAccessor _imageAccessor;
-        public Handler(DataContext context, IImageAccessor imageAccessor, IOriginAccessor originAccessor, IMapper mapper)
+        public Handler(DataContext context, IImageAccessor imageAccessor)
         {
             _imageAccessor = imageAccessor;
-            _mapper = mapper;
             _context = context;
         }
 
@@ -39,11 +37,11 @@ public class UploadCarImage
 
                 if (!resultValidation.IsValid) return Result<Unit>.Failure("Failed to upload image", resultValidation);
 
-                var car = await _context.Cars.Include(i => i.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate);
+                var car = await _context.Cars.Include(i => i.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate, cancellationToken);
 
                 if (car == null) return Result<Unit>.Failure("Failed to upload image");
 
-                var fileName = $"{Guid.NewGuid().ToString()}_{request.File.FileName}";
+                var fileName = $"{Guid.NewGuid()}_{request.File.FileName}";
 
                 var path = await _imageAccessor.AddImage(request.File, fileName);
 
@@ -55,7 +53,7 @@ public class UploadCarImage
                 {
                     Car = car,
                     ImageName = fileName,
-                    IsMain = currentMain?.IsMain == true ? false : true
+                    IsMain = !(bool)currentMain?.IsMain
                 };
 
                 car.Images.Add(carImage);

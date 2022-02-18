@@ -41,7 +41,7 @@ public class List
                 query = query.Where(x => x.Brand.Contains(request.Search, StringComparison.OrdinalIgnoreCase) || x.Model.Contains(request.Search, StringComparison.OrdinalIgnoreCase));
             }
 
-            return Result<List<CarDtoQuery>>.Success(await query.ToListAsync());
+            return Result<List<CarDtoQuery>>.Success(await query.ToListAsync(cancellationToken));
         }
     }
 }

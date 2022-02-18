@@ -13,13 +13,13 @@ public class CarAppointmentValidator : AbstractValidator<CarAppointmentDtoReques
         RuleFor(x => x.EndDate)
             .Must(BeValidDate)
             .WithMessage("End date it must be valid and required");
-        RuleFor(x => x).Must(x => x.EndDate == default(DateTime) || x.StartDate == default(DateTime) || x.EndDate > x.StartDate)
+        RuleFor(x => x).Must(x => x.EndDate.Equals(DateTime.MinValue) || x.StartDate.Equals(DateTime.MinValue) || x.EndDate > x.StartDate)
             .WithMessage("End date must greater than start date");
     }
 
     private bool BeValidDate(DateTime date)
     {
-        if (date.Equals(default(DateTime))) return false;
+        if (date.Equals(DateTime.MinValue)) return false;
 
         return date > DateTime.Now;
     }

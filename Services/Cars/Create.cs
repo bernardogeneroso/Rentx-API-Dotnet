@@ -41,7 +41,7 @@ public class Create
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var carExist = await _context.Cars.AnyAsync(x => x.Plate == request.Car.Plate);
+            var carExist = await _context.Cars.AnyAsync(x => x.Plate == request.Car.Plate, cancellationToken);
 
             if (carExist) return Result<Unit>.Failure("Car already exists");
 
@@ -49,7 +49,7 @@ public class Create
 
             _context.Cars.Add(newCar);
 
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to create car");
 

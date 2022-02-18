@@ -32,9 +32,9 @@ public class FavoriteCar
 
         public async Task<Result<FavoriteCarDtoQuery>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail(), cancellationToken);
 
-            if (user == null) return Result<FavoriteCarDtoQuery>.Failure("Faield to get your favorite car");
+            if (user == null) return Result<FavoriteCarDtoQuery>.Failure("Failed to get your favorite car");
 
             var allPossibleFavoriteCars = await _context.CarsAppointments
             .AsNoTracking()
@@ -47,9 +47,9 @@ public class FavoriteCar
                 Count = x.Count()
             })
             .OrderByDescending(x => x.Count)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-            if (allPossibleFavoriteCars.Count() == 0) return Result<FavoriteCarDtoQuery>.Failure("You needed to schedule at least one car");
+            if (allPossibleFavoriteCars.Count == 0) return Result<FavoriteCarDtoQuery>.Failure("You needed to schedule at least one car");
 
             var favoriteCarRentalDays = allPossibleFavoriteCars
             .Select(x => new
@@ -61,9 +61,11 @@ public class FavoriteCar
             .ToList()
             .FirstOrDefault();
 
-            var car = await _context.Cars.ProjectTo<CarDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() }).FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate);
+            var car = await _context.Cars
+                        .ProjectTo<CarDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
+                        .FirstOrDefaultAsync(x => x.Plate == favoriteCarRentalDays.Plate, cancellationToken);
 
-            if (car == null) return Result<FavoriteCarDtoQuery>.Failure("Faield to get your favorite car");
+            if (car == null) return Result<FavoriteCarDtoQuery>.Failure("Failed to get your favorite car");
 
             var favoriteCarDtoQuery = new FavoriteCarDtoQuery
             {

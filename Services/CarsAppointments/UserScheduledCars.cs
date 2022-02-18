@@ -31,11 +31,11 @@ public class UserScheduledCars
 
         public async Task<Result<List<CarScheduledDtoQuery>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail(), cancellationToken);
 
-            if (user == null) return Result<List<CarScheduledDtoQuery>>.Failure("Faield to get your scheduled cars");
+            if (user == null) return Result<List<CarScheduledDtoQuery>>.Failure("Failed to get your scheduled cars");
 
-            var cars = await _context.Cars.ToListAsync();
+            var cars = await _context.Cars.ToListAsync(cancellationToken);
 
             var carsScheduled = await _context.Cars
                                 .AsNoTracking()
@@ -47,9 +47,9 @@ public class UserScheduledCars
                                 .Select(x => x.car)
                                 .OrderByDescending(x => x.Appointments.Any(x => x.StartDate > DateTime.Now))
                                 .ProjectTo<CarScheduledDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
-                                .ToListAsync();
+                                .ToListAsync(cancellationToken);
 
-            if (carsScheduled.Count() == 0) return Result<List<CarScheduledDtoQuery>>.Failure("You need to schedule at least one car");
+            if (carsScheduled.Count == 0) return Result<List<CarScheduledDtoQuery>>.Failure("You need to schedule at least one car");
 
             return Result<List<CarScheduledDtoQuery>>.Success(carsScheduled);
         }

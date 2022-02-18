@@ -48,9 +48,9 @@ public class CarsBetweenDates
                                     || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate))
                             .Select(x => x.Plate)
                             .Distinct()
-                            .ToListAsync();
+                            .ToListAsync(cancellationToken);
 
-            if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDtoQuery>>.Failure("Faield getting cars between dates");
+            if (carsWithAppointmentsBetweenDates == null) return Result<List<CarDtoQuery>>.Failure("Failed getting cars between dates");
 
             var cars = await _context.Cars
                             .AsNoTracking()
@@ -60,7 +60,7 @@ public class CarsBetweenDates
                             && x.PricePerDay <= request.Result.EndPricePerDay)
                             .Where(x => !carsWithAppointmentsBetweenDates.Contains(x.Plate))
                             .ProjectTo<CarDtoQuery>(_mapper.ConfigurationProvider, new { currentOrigin = _originAccessor.GetOrigin() })
-                            .ToListAsync();
+                            .ToListAsync(cancellationToken);
 
             return Result<List<CarDtoQuery>>.Success(cars);
         }

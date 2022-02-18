@@ -34,7 +34,7 @@ public class Delete
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var car = await _context.Cars.Include(x => x.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate);
+            var car = await _context.Cars.Include(x => x.Images).FirstOrDefaultAsync(x => x.Plate == request.Plate, cancellationToken);
 
             if (car == null) return null;
 
@@ -48,7 +48,7 @@ public class Delete
 
             _context.Cars.Remove(car);
 
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to delete the car");
 

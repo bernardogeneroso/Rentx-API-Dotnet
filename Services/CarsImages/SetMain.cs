@@ -33,7 +33,7 @@ public class SetMain
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var images = await _context.CarsImages.Where(x => x.Plate == request.Plate).ToListAsync();
+            var images = await _context.CarsImages.Where(x => x.Plate == request.Plate).ToListAsync(cancellationToken);
 
             var image = images.FirstOrDefault(x => x.ImageName == request.ImageName);
 
@@ -46,7 +46,7 @@ public class SetMain
             image.IsMain = true;
             oldImage.IsMain = false;
 
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to set main image");
 

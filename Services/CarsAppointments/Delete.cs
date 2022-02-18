@@ -25,11 +25,11 @@ public class Delete
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail(), cancellationToken);
 
             if (user == null) return Result<Unit>.Failure("Failed to delete car appointment");
 
-            var appointment = await _context.CarsAppointments.FindAsync(request.Id);
+            var appointment = await _context.CarsAppointments.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (appointment == null) return Result<Unit>.Failure("Failed to delete car appointment");
 

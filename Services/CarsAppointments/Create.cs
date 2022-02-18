@@ -30,38 +30,36 @@ public class Create
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
         private readonly IUserAccessor _userAccessor;
 
-        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+        public Handler(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
-            _mapper = mapper;
             _userAccessor = userAccessor;
         }
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == _userAccessor.GetEmail(), cancellationToken);
 
-            if (user == null) return Result<Unit>.Failure("Faield creating car appointment");
+            if (user == null) return Result<Unit>.Failure("Failed creating car appointment");
 
-            var car = await _context.Cars.FindAsync(request.Plate);
+            var car = await _context.Cars.FindAsync(new[] { request.Plate }, cancellationToken);
 
-            if (car == null) return Result<Unit>.Failure("Faield creating car appointment");
+            if (car == null) return Result<Unit>.Failure("Failed creating car appointment");
 
             var startDate = request.CarAppointment.StartDate.Date;
             var endDate = request.CarAppointment.EndDate.Date;
 
             var userHasMoreCarAppointments = await _context.CarsAppointments.AnyAsync(x => x.UserId == user.Id
                     && ((x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
-                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)));
+                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)), cancellationToken);
 
             if (userHasMoreCarAppointments) return Result<Unit>.Failure("The user only can have one car appointment per date");
 
             var existCarAppointmentsBetweenDates = await _context.CarsAppointments
                 .AnyAsync(x => x.Plate == car.Plate && ((x.StartDate.Date <= startDate && x.EndDate.Date >= startDate)
-                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)));
+                    || (x.EndDate.Date >= endDate && x.StartDate.Date <= endDate)), cancellationToken);
 
             if (existCarAppointmentsBetweenDates) return Result<Unit>.Failure("This car is already reserved for this period");
 
@@ -80,7 +78,7 @@ public class Create
 
             var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-            if (!result) return Result<Unit>.Failure("Faield creating car appointment");
+            if (!result) return Result<Unit>.Failure("Failed creating car appointment");
 
             return Result<Unit>.SuccessNoContent(Unit.Value);
         }

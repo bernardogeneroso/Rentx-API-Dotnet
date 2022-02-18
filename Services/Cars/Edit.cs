@@ -37,13 +37,13 @@ public class Edit
         {
             var car = await _context.Cars
                     .Include(x => x.Detail)
-                    .FirstOrDefaultAsync(x => x.Plate == request.Car.Plate);
+                    .FirstOrDefaultAsync(x => x.Plate == request.Car.Plate, cancellationToken);
 
             if (car == null) return null;
 
             _mapper.Map(request.Car, car);
 
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (!result) return Result<Unit>.Failure("Failed to edit the car");
 

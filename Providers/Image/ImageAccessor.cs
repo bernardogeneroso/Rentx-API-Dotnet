@@ -20,29 +20,33 @@ public class ImageAccessor : IImageAccessor
 
     public async Task<string> AddImage(IFormFile File, string fileName)
     {
+        var directoryPath = _environment.WebRootPath + "/images";
+
+        if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+
+        var path = Path.Combine(_environment.WebRootPath, "images", fileName);
+
+        using var stream = new FileStream(path, FileMode.Create);
+
         try
         {
-            var directoryPath = _environment.WebRootPath + "/images";
+            await File.CopyToAsync(stream);
+            await stream.FlushAsync();
 
-            if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+            var url = Path.Combine(_originAccessor.GetOrigin(), "images", fileName);
 
-            var path = Path.Combine(_environment.WebRootPath, "images", fileName);
+            return url;
 
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await File.CopyToAsync(stream);
-                await stream.FlushAsync();
-
-                var url = Path.Combine(_originAccessor.GetOrigin(), "images", fileName);
-
-                return url;
-            }
         }
         catch (Exception ex)
         {
             if (_environment.IsDevelopment()) _logger.LogError(ex.Message);
 
             return null;
+        }
+        finally
+        {
+            stream?.Dispose();
         }
     }
 

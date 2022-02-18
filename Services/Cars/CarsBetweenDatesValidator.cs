@@ -41,7 +41,7 @@ public class CarsBetweenDatesValidator : AbstractValidator<CarsBetweenDatesDtoRe
 
     private bool BeValidDate(DateTime date)
     {
-        if (date.Equals(default(DateTime))) return false;
+        if (date.Equals(DateTime.MinValue)) return false;
 
         return date > DateTime.Now;
     }

@@ -21,11 +21,11 @@ public class AccountController : ControllerBase
     private readonly IUserAccessor _userAccessor;
     private readonly IImageAccessor _imageAccessor;
     private readonly IOriginAccessor _originAccessor;
-    private readonly IMailAccessor _mailAccesor;
+    private readonly IMailAccessor _mailAccessor;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor, IOriginAccessor originAccessor, IMailAccessor mailAccesor)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService, IUserAccessor userAccessor, IImageAccessor imageAccessor, IOriginAccessor originAccessor, IMailAccessor mailAccessor)
     {
-        _mailAccesor = mailAccesor;
+        _mailAccessor = mailAccessor;
         _originAccessor = originAccessor;
         _imageAccessor = imageAccessor;
         _userAccessor = userAccessor;
@@ -96,7 +96,7 @@ public class AccountController : ControllerBase
 
         var body = $"Please verify your email by clicking on the button below.";
 
-        await _mailAccesor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
+        await _mailAccessor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
 
         return Ok("User registered");
     }
@@ -143,7 +143,7 @@ public class AccountController : ControllerBase
 
         var body = $"Please verify your email by clicking on the button below.";
 
-        await _mailAccesor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
+        await _mailAccessor.SendMail(user.Email, "RentX - Verify your email", user.DisplayName, body, button);
 
         return Ok("Email verification link resent");
     }
@@ -155,7 +155,7 @@ public class AccountController : ControllerBase
 
         if (user == null) return Unauthorized();
 
-        var fileName = $"{Guid.NewGuid().ToString()}_{File.FileName}";
+        var fileName = $"{Guid.NewGuid()}_{File.FileName}";
 
         if (user.AvatarName != null)
         {
