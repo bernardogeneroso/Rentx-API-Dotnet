@@ -61,11 +61,11 @@ public class Seed
                   PricePerDay = 100,
                   Detail = new CarDetail
                   {
-                    maxSpeed = 200,
-                    topSpeed = 220,
-                    acceleration = 2.5f,
-                    weight = 1500,
-                    hp = 150
+                    MaxSpeed = 200,
+                    TopSpeed = 220,
+                    Acceleration = 2.5f,
+                    Weight = 1500,
+                    Hp = 150
                   }
                 },
                 new Car
@@ -82,11 +82,11 @@ public class Seed
                     PricePerDay = 999,
                     Detail = new CarDetail
                     {
-                        maxSpeed = 300,
-                        topSpeed = 320,
-                        acceleration = 3.5f,
-                        weight = 2000,
-                        hp = 200
+                        MaxSpeed = 300,
+                        TopSpeed = 320,
+                        Acceleration = 3.5f,
+                        Weight = 2000,
+                        Hp = 200
                     }
                 },
                 new Car
@@ -103,11 +103,11 @@ public class Seed
                     PricePerDay = 1200,
                     Detail = new CarDetail
                     {
-                        maxSpeed = 400,
-                        topSpeed = 420,
-                        acceleration = 4.5f,
-                        weight = 2500,
-                        hp = 250
+                        MaxSpeed = 400,
+                        TopSpeed = 420,
+                        Acceleration = 4.5f,
+                        Weight = 2500,
+                        Hp = 250
                     }
                 },
                 new Car
@@ -124,11 +124,11 @@ public class Seed
                     PricePerDay = 1500,
                     Detail = new CarDetail
                     {
-                        maxSpeed = 500,
-                        topSpeed = 520,
-                        acceleration = 5.5f,
-                        weight = 3000,
-                        hp = 300
+                        MaxSpeed = 500,
+                        TopSpeed = 520,
+                        Acceleration = 5.5f,
+                        Weight = 3000,
+                        Hp = 300
                     }
                 },
                 new Car
@@ -145,11 +145,11 @@ public class Seed
                     PricePerDay = 1800,
                     Detail = new CarDetail
                     {
-                        maxSpeed = 600,
-                        topSpeed = 620,
-                        acceleration = 6.5f,
-                        weight = 3500,
-                        hp = 350
+                        MaxSpeed = 600,
+                        TopSpeed = 620,
+                        Acceleration = 6.5f,
+                        Weight = 3500,
+                        Hp = 350
                     }
                 },
             };

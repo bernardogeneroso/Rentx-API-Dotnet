@@ -7,10 +7,10 @@ public class CarDetailValidator : AbstractValidator<CarDetailDtoRequest>
 {
     public CarDetailValidator()
     {
-        RuleFor(x => x.maxSpeed).GreaterThan(0).NotEmpty();
-        RuleFor(x => x.topSpeed).GreaterThan(0).NotEmpty();
-        RuleFor(x => x.acceleration).GreaterThan(0).NotEmpty();
-        RuleFor(x => x.weight).GreaterThan(0).NotEmpty();
-        RuleFor(x => x.hp).GreaterThan(0).NotEmpty();
+        RuleFor(x => x.MaxSpeed).GreaterThan(0).NotEmpty();
+        RuleFor(x => x.TopSpeed).GreaterThan(0).NotEmpty();
+        RuleFor(x => x.Acceleration).GreaterThan(0).NotEmpty();
+        RuleFor(x => x.Weight).GreaterThan(0).NotEmpty();
+        RuleFor(x => x.Hp).GreaterThan(0).NotEmpty();
     }
 }
