@@ -10,7 +10,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-DC1637">
 </p>
 
-> This project already exist, but this time has been created with Web Api ASP.Net Core using language of programming C#
+> This project already exist, but this time has been created with Web Api ASP.Net Core using C#
 
 > Link for the other project [RentX](https://github.com/bernardogeneroso/RentX-Rocketseat);
 
